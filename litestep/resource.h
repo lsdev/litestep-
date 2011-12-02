@@ -40,6 +40,7 @@
 #define IDC_LISTVIEW                        1006
 #define IDC_THEME_INFO                      1007
 #define IDC_EDIT                            1008
+#define IDC_STATIC							-1
 
 // Next default values for new objects
 // 
