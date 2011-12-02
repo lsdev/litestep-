@@ -1,0 +1,60 @@
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    LiteStep 0.25.0
+    MinGW Developer Information
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+
+-- BUILD REQUIREMENTS ----------------------------------------------------------
+
+ - TDM/MinGW Installer 1.812.0 (www.tdragon.net/recentgcc/)
+ - Recent version of Strsafe.h from Microsoft Windows SDK (www.microsoft.com)
+
+ This is the configuration used during 0.25.0 development, it is quite possible
+ that other versions of the above packages can be used, but there's no
+ guarantee.
+
+
+-- BUILD SETUP -----------------------------------------------------------------
+
+ A. Install MinGW
+ ----------------
+
+  1. Download the TDM/MinGW Installer 1.812.0 (Bundled version).
+
+  2. Run the installer, and leave all component selections at defaults.
+
+ B. Install strsafe.h
+ --------------------
+
+  1. LiteStep currently requires the MicroSoft Strsafe.h header file.  This is
+     included in recent Microsoft SDKs.  Copy the strsafe.h header file into the
+     MinGW include directory.
+
+-- BUILDING LITESTEP -----------------------------------------------------------
+
+ A. Extract source code
+ ----------------------
+
+  1. Create a build directory for the source code (eg. C:\src\LiteStep).
+
+  2. Extract the source code into the build directory. So that the build
+     directory has the following structure:
+
+     \LiteStep
+         \litestep
+         \lsapi
+         \utility
+
+ B. Compile
+ ----------
+ 
+  1. Open a MinGW build prompt and change to the LiteStep source directory.
+
+  2. For a release build, run: mingw32-make
+     To clean use: mingw32-make clean
+
+     For a debug build, run: mingw32-make DEBUG=1
+     To clean use: mingw32-make DEBUG=1 clean
+
+  3. The output binaries will be off of the LiteStep source directory in
+     Release_MinGW or Debug_MinGW folders depending on the build type.

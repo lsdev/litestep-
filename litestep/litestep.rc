@@ -1,0 +1,359 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// German (Germany) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_DEU)
+#ifdef _WIN32
+LANGUAGE LANG_GERMAN, SUBLANG_GERMAN
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_LITESTEP_TITLE_WARNING "Warnung"
+    IDS_LITESTEP_TITLE_ERROR "Fehler"
+    IDS_LITESTEP_ERROR1     "Eine vorherige Instanz von LiteStep gefunden.\nSind Sie sicher, daß Sie weitermachen wollen?"
+    IDS_LITESTEP_ERROR2     "Konnte die Datei ""%s"" nicht finden.\nBitte stellen Sie sicher, daß der Pfad korrekt ist und die Datei existiert."
+    IDS_LITESTEP_ERROR3     "LiteStep kann nicht als die System-Shell geladen werden,\nda bereits eine andere Shell aktiv ist.\n\nFalls Sie mit dem Laden LiteSteps fortfahren, werden einige\nFunktionen deaktiviert, und einige Features werden nicht\nordnungsgemäß funktionieren, wie z.B. der System-Tray, der\nDesktop und einige Task-Manager.\n\nUm diesen Hinweis abzuschalten, fügen Sie 'LSNoShellWarning'\nin Ihre step.rc ein.\n\nSoll mit dem Laden LiteSteps fortgefahren werden?"
+    IDS_LITESTEP_ERROR4     "Fehler beim Registrieren der LiteStep-Hauptfensterklasse."
+    IDS_LITESTEP_ERROR5     "Fehler beim Erzeugen des LiteStep-Hauptfensters."
+    IDS_LITESTEP_ERROR6     "Recycle wurde pausiert. Drücken Sie OK, um weiterzumachen."
+    IDS_LITESTEP_ERROR7     "Konnte %s nicht laden."
+    IDS_LITESTEP_RECYCLELS  "LiteStep &recyclen"
+    IDS_LITESTEP_QUITLS     "LiteStep be&enden"
+    IDS_LITESTEP_TERMINATELS "LiteStep ab&brechen"
+    IDS_LITESTEP_RUN        "&Ausführen..."
+    IDS_LITESTEP_SHUTDOWNWIN "Windows &Herunterfahren"
+END
+
+#endif    // German (Germany) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_LS                  ICON                    "litestep.ico"
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 240, 185
+STYLE DS_MODALFRAME | DS_SHELLFONT | WS_POPUP | WS_CAPTION
+CAPTION "About LiteStep..."
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "",IDC_HEADER,0,0,239,32
+    DEFPUSHBUTTON   "OK",IDOK,179,165,50,14
+    LTEXT           "&Select information to display:",IDC_STATIC,12,41,94,8
+    COMBOBOX        IDC_COMBOBOX,109,39,93,76,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    CONTROL         "List1",IDC_LISTVIEW,"SysListView32",LVS_REPORT | 
+                    LVS_SINGLESEL | LVS_NOLABELWRAP | LVS_AUTOARRANGE | 
+                    LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,10,58,219,100
+    LTEXT           "",IDC_TITLE,38,3,187,16,SS_CENTERIMAGE,
+                    WS_EX_TRANSPARENT
+    CONTROL         IDB_LS,IDC_LOGO,"Static",SS_BITMAP,2,1,32,30
+    LTEXT           "",IDC_COMPILETIME,12,168,153,8
+    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,0,32,241,1
+    CONTROL         "",IDC_THEME_INFO,"Static",SS_LEFTNOWORDWRAP | WS_GROUP,
+                    44,18,182,8
+    EDITTEXT        IDC_EDIT,10,58,219,100,ES_MULTILINE | ES_READONLY | NOT 
+                    WS_VISIBLE | WS_VSCROLL
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 0,25,0,0
+ PRODUCTVERSION 0,25,0,0
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "04090000"
+        BEGIN
+            VALUE "Comments", "http://www.lsdev.org/"
+            VALUE "CompanyName", "LiteStep Development Team"
+            VALUE "FileDescription", "LiteStep"
+            VALUE "FileVersion", "0.25.0 Alpha"
+            VALUE "InternalName", "LiteStep Core"
+            VALUE "LegalCopyright", "Copyright © 1997 - 2009"
+            VALUE "OriginalFilename", "litestep.exe"
+            VALUE "ProductName", "LiteStep"
+            VALUE "ProductVersion", "0.25.0 Alpha"
+            VALUE "SpecialBuild", "CVS HEAD Test Release"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 0
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_LS                  BITMAP                  "litestep.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        VERTGUIDE, 10
+        VERTGUIDE, 124
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_LITESTEP_TITLE_WARNING "Warning"
+    IDS_LITESTEP_TITLE_ERROR "Error"
+    IDS_LITESTEP_ERROR1     "A previous instance of LiteStep was detected.\nAre you sure you want to continue?"
+    IDS_LITESTEP_ERROR2     "Unable to find the file ""%s"".\nPlease verify the location of the file."
+    IDS_LITESTEP_ERROR3     "LiteStep is not able to load as the system shell.\nAnother shell is already active.\n\nContinuing to load LiteStep will disable specific system\nshell functions of LiteStep and some features will not\nfunction properly such as icon notifications (systray),\nthe desktop and some task managers.\n\nTo disable this message, place 'LSNoShellWarning' in\nyour step.rc.\n\nContinue to load LiteStep?"
+    IDS_LITESTEP_ERROR4     "Error registering main LiteStep window class."
+    IDS_LITESTEP_ERROR5     "Error creating LiteStep main application window."
+    IDS_LITESTEP_ERROR6     "Recycle has been paused, click OK to continue."
+    IDS_LITESTEP_ERROR7     "Unable to load %s."
+    IDS_LITESTEP_RECYCLELS  "Re&cycle LiteStep"
+    IDS_LITESTEP_QUITLS     "&Quit LiteStep"
+    IDS_LITESTEP_TERMINATELS "Forcibly &Terminate LiteStep"
+    IDS_LITESTEP_RUN        "&Run..."
+    IDS_LITESTEP_SHUTDOWNWIN "Sh&utdown Windows..."
+    IDS_MODULEQUIT_ERROR    "Exception while quitting module."
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_MODULENOTFOUND_ERROR 
+                            "Error: Could not locate module.\nPlease check your configuration."
+    IDS_INITMODULEEXNOTFOUND_ERROR 
+                            "Error: Could not find initModuleEx().\n\nPlease confirm that the dll is a LiteStep module,\nand check with the author for updates."
+    IDS_QUITMODULENOTFOUND_ERROR 
+                            "Error: Could not find quitModule().\n\nPlease conirm that the dll is a LiteStep module."
+    IDS_MODULEINITEXCEPTION_ERROR 
+                            "Error: Exception during module initialization.\n\nPlease contact the module writer."
+    IDS_LITESTEP_CREATEWINDOW_ERROR "Unable to create window."
+    IDS_LITESTEP_BANGEXCEPTION 
+                            "Exception during bang command execution.\nPlease contact the module author.\n\nBang parameters: %s"
+    IDS_LITESTEP_REGISTERCLASS_ERROR "Error registering window class."
+    IDS_MODULEDEPENDENCY_ERROR 
+                            "Error: Could not load module.\nThis is likely a case of a missing C Run-Time Library or other dependency."
+    IDS_RECURSIVEVAR        "Error: Variable ""%s"" is defined recursively."
+    IDS_MATHEXCEPTION       "Error in Expression:\n  %s\n\nDescription:\n  %s"
+    IDS_LSAPI_INIT_ERROR    "Failed to initialize the LiteStep API."
+    IDS_LITESTEP_INIT_ERROR "Failed to initialize LiteStep.\nPlease contact the LiteStep development team.\n\nError code: 0x%.8X"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// French (France) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_FRA)
+#ifdef _WIN32
+LANGUAGE LANG_FRENCH, SUBLANG_FRENCH
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_LITESTEP_TITLE_WARNING "Avertissement"
+    IDS_LITESTEP_TITLE_ERROR "Erreur"
+    IDS_LITESTEP_ERROR1     "Une instance de LiteStep existe déjà.\nVoulez-vous vraiment continuer?"
+    IDS_LITESTEP_ERROR2     "Impossible de trouver le fichier ""%s"".\nVeuillez vérifier\nl'emplacement du fichier."
+    IDS_LITESTEP_ERROR3     "Vous utilisez présentement un autre Shell que LiteStep.\nBien que le Shell LiteStep ait la capacité de fonctionner\nen mode ""application standard"", nous ne conseillons pas\nce mode pour les utilisateurs inexpérimentés.\n\nSi vous continuez, quelques fonctionnalités de LiteStep,\ndont la zone d'icônes de notification, le bureau et la\nbarre des tâches, ne pourront pas fonctionner normalement.\n\nPour désactiver ce message, ajoutez \\'LSNoShellWarning\\'\ndans votre fichier step.rc.\n\nVoulez-vous continuer en mode application?"
+    IDS_LITESTEP_ERROR4     "Erreur d'enregistrement de la window class principale de LiteStep."
+    IDS_LITESTEP_ERROR5     "Erreur de création de la fenêtre principale d'application de LiteStep"
+    IDS_LITESTEP_ERROR6     "Recycler est en pause, cliquez OK pour poursuivre."
+    IDS_LITESTEP_ERROR7     "%s n'a pu être chargé(e)."
+    IDS_LITESTEP_RECYCLELS  "&Recycler LiteStep"
+    IDS_LITESTEP_QUITLS     "&Quitter LiteStep"
+    IDS_LITESTEP_TERMINATELS "&Forcer l'arrêt de LiteStep"
+    IDS_LITESTEP_RUN        "&Exécuter..."
+    IDS_LITESTEP_SHUTDOWNWIN "&Fermeture de Windows..."
+END
+
+#endif    // French (France) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Dutch (Netherlands) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NLD)
+#ifdef _WIN32
+LANGUAGE LANG_DUTCH, SUBLANG_DUTCH
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_LITESTEP_TITLE_WARNING "Waarschuwing."
+    IDS_LITESTEP_TITLE_ERROR "Fout"
+    IDS_LITESTEP_ERROR1     "Er is een andere instantie van LiteStep gedetecteerd.\nWeet u zeker dat u door wilt gaan?"
+    IDS_LITESTEP_ERROR2     "Het bestand ""%s"".\nVerifieer de locatie van het bestand en probeer opnieuw."
+    IDS_LITESTEP_ERROR3     "Op dit moment gebruikt u een andere grafische interface (gui).\nHoewel LiteStep bovenop de huidige GUI kan draaien, adviseren\nwe dat niet voor onervaren gebruikers.\n\nAls u doorgaat, zullen sommige van LiteStep's functies\nniet naar behoren werken zoals de taakbalk, het bureaublad\nen andere functies\n\nOm dit bericht voortaan niet meer te laten zien, plaatst\nu 'LSNoShellWarning' in uw step.rc.\n\nLiteStep toch starten?"
+    IDS_LITESTEP_ERROR4     "Fout bij het registreren van de main LiteStep Window Class."
+    IDS_LITESTEP_ERROR5     "Error creating LiteStep main application window."
+    IDS_LITESTEP_ERROR6     "Recycle is gepauzeerd, klik op OK om door te gaan."
+    IDS_LITESTEP_ERROR7     "Unable to load %s."
+    IDS_LITESTEP_RECYCLELS  "&Hernieuw LiteStep"
+    IDS_LITESTEP_QUITLS     "&Stop LiteStep"
+    IDS_LITESTEP_TERMINATELS "Forcibly &Terminate LiteStep"
+    IDS_LITESTEP_RUN        "&Run..."
+    IDS_LITESTEP_SHUTDOWNWIN "&Afsluiten Windows..."
+END
+
+#endif    // Dutch (Netherlands) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Swedish resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_SVE)
+#ifdef _WIN32
+LANGUAGE LANG_SWEDISH, SUBLANG_DEFAULT
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_LITESTEP_TITLE_WARNING "Varning"
+    IDS_LITESTEP_TITLE_ERROR "Fel"
+    IDS_LITESTEP_ERROR1     "En tidigare instans av LiteStep upptäcktes.\nÄr du säker på att du vill fortsätta?"
+    IDS_LITESTEP_ERROR2     "Kunde inte hitta filen ""%s"".\nKontrollera att filen existerar och försök igen."
+    IDS_LITESTEP_ERROR3     "LiteStep kan inte starta som systemets skal.\nEtt annat skal körs redan.\n\nOm du väljer att fortsätta kommer vissa funktioner\ni LiteStep inte att fungera som det är tänkt, till\nexempel meddelandefältet, skrivbordet och vissa\naktivitetshanterare.\n\nFör att inaktivera detta meddelande, skriv\n'LSNoShellWarning' i din step.rc\n\nVill du fortfarande starta LiteStep?"
+    IDS_LITESTEP_ERROR4     "Ett fel uppstod när klassen för huvudfönstret skulle registreras.Error registering main LiteStep window class."
+    IDS_LITESTEP_ERROR5     "Kunde inte skapa huvudfönstret."
+    IDS_LITESTEP_ERROR6     "Återvinning av inställningarna har pausats. Tryck på OK för att fortsätta."
+    IDS_LITESTEP_ERROR7     "Kunde inte ladda %s."
+    IDS_LITESTEP_RECYCLELS  "&Återvinn inställningar"
+    IDS_LITESTEP_QUITLS     "&Avsluta"
+    IDS_LITESTEP_TERMINATELS "Avsluta med &våld."
+    IDS_LITESTEP_RUN        "&Kör..."
+    IDS_LITESTEP_SHUTDOWNWIN "&Stäng av..."
+END
+
+#endif    // Swedish resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
