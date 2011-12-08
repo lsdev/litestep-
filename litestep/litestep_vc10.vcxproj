@@ -147,7 +147,6 @@
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\my_changes.txt" />
     <None Include="litestep.bmp" />
     <None Include="litestep.ico" />
   </ItemGroup>
