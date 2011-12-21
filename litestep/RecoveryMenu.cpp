@@ -356,6 +356,13 @@ void RecoveryMenu::HandleMenuCommand(int nCommand) const
 			PostMessage(GetLitestepWnd(), LM_BANGCOMMAND, 0, (LPARAM)&cds);
 		}
 		break;
+
+	case ID_EXPLORER:
+		{
+			// ditto
+            PostMessage(GetLitestepWnd(), LM_RECYCLE, LR_EXPLORER, 0);
+		}
+		break;
         
     case ID_TERMINATE:
         {
@@ -374,12 +381,6 @@ void RecoveryMenu::HandleMenuCommand(int nCommand) const
             fnRunDlg(NULL, NULL, NULL, NULL, NULL, 0);
         }
         break;
-
-	case ID_EXPLORER:
-		{
-			// todo
-		}
-		break;
         
     case ID_SHUTDOWN:
         {

@@ -906,6 +906,12 @@ LRESULT CLiteStep::InternalWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
                     PostQuitMessage(0);
                 }
                 break;
+
+            case LR_EXPLORER:
+                {
+                    PostQuitMessage(4);
+                }
+                break;
                 
             default:  // wParam == LR_MSSHUTDOWN
                 {
