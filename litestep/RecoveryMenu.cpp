@@ -58,10 +58,10 @@ rgMenuCommands[] = \
      { IDS_LITESTEP_RECYCLELS,   ID_RECYCLE,   "Re&cycle LiteStep"            }
     ,{ IDS_LITESTEP_QUITLS,      ID_QUIT,      "&Quit LiteStep"               }
     ,{ IDS_LITESTEP_TERMINATELS, ID_TERMINATE, "Forcibly &Terminate LiteStep" }
-	,{ IDS_LITESTEP_ABOUTLS,     ID_ABOUT,     "&About LiteStep"              }
+    ,{ IDS_LITESTEP_ABOUTLS,     ID_ABOUT,     "&About LiteStep"              }
     ,{ 0,                        -1,           ""                             }
     ,{ IDS_LITESTEP_RUN,         ID_RUN,       "&Run..."                      }
-	,{ IDS_LITESTEP_EXPLORER,    ID_EXPLORER,  "&Start Explorer as shell"     }
+    ,{ IDS_LITESTEP_EXPLORER,    ID_EXPLORER,  "&Start Explorer as shell"     }
     ,{ 0,                        -1,           ""                             }
     ,{ IDS_LITESTEP_SHUTDOWNWIN, ID_SHUTDOWN,  "Sh&utdown Windows..."         }
 };
@@ -349,20 +349,20 @@ void RecoveryMenu::HandleMenuCommand(int nCommand) const
         }
         break;
     
-	case ID_ABOUT:
-		{
-			// ditto
-			LMBANGCOMMAND cds = {sizeof(LMBANGCOMMAND), NULL, "!about", NULL};
-			PostMessage(GetLitestepWnd(), LM_BANGCOMMAND, 0, (LPARAM)&cds);
-		}
-		break;
-
-	case ID_EXPLORER:
-		{
-			// ditto
+    case ID_ABOUT:
+        {
+	        // ditto
+	        LMBANGCOMMAND lmbc = {sizeof(LMBANGCOMMAND), NULL, "!about", NULL};
+	        PostMessage(GetLitestepWnd(), LM_BANGCOMMAND, 0, (LPARAM)&lmbc);
+        }
+        break;
+        
+    case ID_EXPLORER:
+           {
+            // ditto
             PostMessage(GetLitestepWnd(), LM_RECYCLE, LR_EXPLORER, 0);
-		}
-		break;
+        }
+        break;
         
     case ID_TERMINATE:
         {
