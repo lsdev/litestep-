@@ -351,9 +351,9 @@ void RecoveryMenu::HandleMenuCommand(int nCommand) const
     
     case ID_ABOUT:
         {
-	        // ditto
-	        LMBANGCOMMAND lmbc = {sizeof(LMBANGCOMMAND), NULL, "!about", NULL};
-	        PostMessage(GetLitestepWnd(), LM_BANGCOMMAND, 0, (LPARAM)&lmbc);
+            // ditto
+            LMBANGCOMMAND lmbc = {sizeof(LMBANGCOMMAND), NULL, "!about", NULL};
+           PostMessage(GetLitestepWnd(), LM_BANGCOMMAND, 0, (LPARAM)&lmbc);
         }
         break;
         

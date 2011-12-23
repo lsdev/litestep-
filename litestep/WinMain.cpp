@@ -312,18 +312,18 @@ int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE, LPTSTR lpCmdLine, int)
                     RESOURCE_STR(hInst, IDS_LITESTEP_ERROR1,
                         "A previous instance of LiteStep was detected.\n"
                         "Are you sure you want to continue?");
-                
+                    
                     // Can show a MessageBox here since the other instance
                     // should have closed the welcome screen already
                     INT idConfirm =  RESOURCE_MSGBOX_F(
                         "LiteStep", MB_ICONINFORMATION | MB_YESNO | MB_DEFBUTTON2);
-                
+                    
                     if (idConfirm == IDNO)
                     {
                         wStartFlags &= ~LSF_RUN_LITESTEP;
                     }
                 }
-            
+                
                 if (wStartFlags & LSF_RUN_LITESTEP)
                 {
                     //
@@ -331,7 +331,7 @@ int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE, LPTSTR lpCmdLine, int)
                     //
                     nReturn = StartLitestep(hInst, wStartFlags, szAltConfigFile);
                 }
-            
+                
                 if (hMutex)
                 {
                     CloseHandle(hMutex);
