@@ -276,14 +276,13 @@ int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE, LPTSTR lpCmdLine, int)
             wStartFlags |= LSF_RUN_EXPLORER;
             wStartFlags &= ~LSF_RUN_STARTUPAPPS;
         }
-
-        bool bLoop = true;
-        while (bLoop)
+        
+        bool bLoop;
+        do
         {
             // Loop back here if explorer is requested as the shell 
             // while LiteStep is already running
-            bLoop = false;
-
+            
             if (wStartFlags & LSF_RUN_EXPLORER)
             {
                 //
@@ -303,7 +302,7 @@ int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE, LPTSTR lpCmdLine, int)
             if (wStartFlags & LSF_RUN_LITESTEP)
             {
                 HANDLE hMutex = NULL;
-
+                
                 if (IsOtherInstanceRunning(&hMutex))
                 {
                     //
@@ -338,13 +337,16 @@ int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE, LPTSTR lpCmdLine, int)
                 }
             }
             
-            if ((nReturn == 4) && !(wStartFlags & LSF_RUN_EXPLORER))
+            bLoop = false;
+
+            if ((nReturn == LRV_EXPLORER_START) && !(wStartFlags & LSF_RUN_EXPLORER))
             {
                 // User wants Explorer as the shell anyway
                 wStartFlags |= LSF_RUN_EXPLORER;
                 bLoop = true;
             }
         }
+        while (bLoop);
     }
     
     return nReturn;

@@ -147,7 +147,7 @@ int StartLitestep(HINSTANCE hInst, WORD wStartFlags, LPCTSTR pszAltConfigFile)
     if (FAILED(GetAppPath(szAppPath, COUNTOF(szAppPath))))
     {
         // something really crappy is going on.
-        return -1;
+        return LRV_NO_APP_PATH;
     }
     
     if (wStartFlags & LSF_ALTERNATE_CONFIG)
@@ -195,7 +195,7 @@ int StartLitestep(HINSTANCE hInst, WORD wStartFlags, LPCTSTR pszAltConfigFile)
         
         RESOURCE_MSGBOX_F("LiteStep", MB_ICONERROR);
         
-        return 2;
+        return LRV_NO_STEP;
     }
     
     // Initialize the LSAPI.  Note: The LSAPI controls the bang and settings
@@ -205,7 +205,7 @@ int StartLitestep(HINSTANCE hInst, WORD wStartFlags, LPCTSTR pszAltConfigFile)
         RESOURCE_MSGBOX(hInst, IDS_LSAPI_INIT_ERROR,
             "Failed to initialize the LiteStep API.", "LiteStep");
         
-        return 3;
+        return LRV_LSAPI_FAIL;
     }
     
     // All child processes get this variable
