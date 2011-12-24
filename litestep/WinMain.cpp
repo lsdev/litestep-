@@ -339,7 +339,7 @@ int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE, LPTSTR lpCmdLine, int)
             
             bLoop = false;
 
-            if ((nReturn == LRV_EXPLORER_START) && !(wStartFlags & LSF_RUN_EXPLORER))
+            if ((nReturn == LRV_EXPLORER_START) && (wStartFlags & LSF_RUN_LITESTEP))
             {
                 // User wants Explorer as the shell anyway
                 wStartFlags |= LSF_RUN_EXPLORER;
