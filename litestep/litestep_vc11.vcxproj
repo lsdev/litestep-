@@ -103,6 +103,7 @@
       </DebugInformationFormat>
       <CompileAs>Default</CompileAs>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>ole32.lib;uuid.lib;shlwapi.lib;advapi32.lib;gdi32.lib;shell32.lib;user32.lib;msvcrt.lib;msvcprt.lib;%(AdditionalDependencies)</AdditionalDependencies>
