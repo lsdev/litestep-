@@ -42,9 +42,11 @@
 #include <WtsApi32.h>
 #include <functional>
 
+
 // namespace stuff
 using std::for_each;
 using std::mem_fun;
+
 
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 //
