@@ -36,6 +36,7 @@ Module::Module(const std::string& sLocation, DWORD dwFlags)
     m_hInitCopyEvent = NULL;
     m_pQuit = NULL;
     m_dwFlags = dwFlags;
+    m_dwLoadTime = 0;
     m_tzLocation = sLocation;
 }
 
@@ -174,6 +175,8 @@ bool Module::Init(HWND hMainWindow, const std::string& sAppPath)
 {
     ASSERT(NULL == m_hInstance);
     
+    DWORD dwStartTime = GetTickCount();
+    
     // delaying the LoadLibrary call until this point is necessary to make
     // grdtransparent work (it hooks LoadLibrary)
     if (_LoadDll())
@@ -203,6 +206,8 @@ bool Module::Init(HWND hMainWindow, const std::string& sAppPath)
         {
             CallInit();
         }
+        
+        m_dwLoadTime = GetTickCount() - dwStartTime;
         
         return true;
     }

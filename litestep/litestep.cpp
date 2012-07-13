@@ -883,6 +883,20 @@ LRESULT CLiteStep::InternalWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM l
         }
         break;
         
+	case LM_ENUMPERFORMANCE:
+        {
+            HRESULT hr = E_FAIL;
+            
+            if (m_pModuleManager)
+            {
+                hr = m_pModuleManager->EnumPerformance((LSENUMPERFORMANCEPROC)wParam,
+                    lParam);
+            }
+            
+            return hr;
+        }
+        break;
+        
     case LM_RECYCLE:
         {
             switch (wParam)
