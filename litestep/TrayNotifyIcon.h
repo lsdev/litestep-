@@ -69,15 +69,20 @@ typedef const LSNOTIFYICONDATA * PCLSNOTIFYICONDATA;
 // NOTIFYICONDATA variants
 //
 
+// For 64bit builds.
+// Handles are 64bits on 64bit builds, while the structure we receive still contain 32bits.
+typedef DWORD HWND32;
+typedef DWORD HICON32;
+
 // Win9x
 typedef struct
 {
     DWORD cbSize;
-    HWND hWnd;
+    HWND32 hWnd;
     UINT uID;
     UINT uFlags;
     UINT uCallbackMessage;
-    HICON hIcon;
+    HICON32 hIcon;
     CHAR szTip[64];
 } NID_4A;
 
@@ -85,11 +90,11 @@ typedef struct
 typedef struct
 {
     DWORD cbSize;
-    HWND hWnd;
+    HWND32 hWnd;
     UINT uID;
     UINT uFlags;
     UINT uCallbackMessage;
-    HICON hIcon;
+    HICON32 hIcon;
     WCHAR szTip[64];
 } NID_4W;
 
@@ -97,11 +102,11 @@ typedef struct
 typedef struct
 {
     DWORD cbSize;
-    HWND hWnd;
+    HWND32 hWnd;
     UINT uID;
     UINT uFlags;
     UINT uCallbackMessage;
-    HICON hIcon;
+    HICON32 hIcon;
     CHAR szTip[128];
     DWORD dwState;
     DWORD dwStateMask;
@@ -119,11 +124,11 @@ typedef struct
 typedef struct
 {
     DWORD cbSize;
-    HWND hWnd;
+    HWND32 hWnd;
     UINT uID;
     UINT uFlags;
     UINT uCallbackMessage;
-    HICON hIcon;
+    HICON32 hIcon;
     WCHAR szTip[128];
     DWORD dwState;
     DWORD dwStateMask;
@@ -141,11 +146,11 @@ typedef struct
 typedef struct
 {
     DWORD cbSize;
-    HWND hWnd;
+    HWND32 hWnd;
     UINT uID;
     UINT uFlags;
     UINT uCallbackMessage;
-    HICON hIcon;
+    HICON32 hIcon;
     CHAR szTip[128];
     DWORD dwState;
     DWORD dwStateMask;
@@ -164,11 +169,11 @@ typedef struct
 typedef struct
 {
     DWORD cbSize;
-    HWND hWnd;
+    HWND32 hWnd;
     UINT uID;
     UINT uFlags;
     UINT uCallbackMessage;
-    HICON hIcon;
+    HICON32 hIcon;
     WCHAR szTip[128];
     DWORD dwState;
     DWORD dwStateMask;
@@ -187,11 +192,11 @@ typedef struct
 typedef struct
 {
     DWORD cbSize;
-    HWND hWnd;
+    HWND32 hWnd;
     UINT uID;
     UINT uFlags;
     UINT uCallbackMessage;
-    HICON hIcon;
+    HICON32 hIcon;
     WCHAR szTip[128];
     DWORD dwState;
     DWORD dwStateMask;
@@ -204,18 +209,18 @@ typedef struct
     WCHAR szInfoTitle[64];
     DWORD dwInfoFlags;
     GUID guidItem;
-    HICON hBalloonIcon;
+    HICON32 hBalloonIcon;
 } NID_7W;
 
 // sub structure common to all others
 typedef struct
 {
     DWORD cbSize;
-    HWND hWnd;
+    HWND32 hWnd;
     UINT uID;
     UINT uFlags;
     UINT uCallbackMessage;
-    HICON hIcon;
+    HICON32 hIcon;
 } NID_XX, *PNID_XX;
 typedef const NID_XX * PCNID_XX;
 

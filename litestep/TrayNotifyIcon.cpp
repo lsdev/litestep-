@@ -58,7 +58,7 @@ NotifyIcon::IcVtr NotifyIcon::s_icVtr;
 //
 
 NotifyIcon::NotifyIcon(const NID_XX& nidSource)
-    :m_hWnd(nidSource.hWnd)
+    :m_hWnd((HWND)nidSource.hWnd)
     ,m_uID(nidSource.uID)
     ,m_uFlags(0)
     ,m_uCallbackMessage(0)
@@ -124,7 +124,7 @@ void NotifyIcon::copy_message(PCNID_XX pnidSource)
 void NotifyIcon::copy_icon(PCNID_XX pnidSource)
 {
     // ignore if we are being told to use the same icon as before.
-    if (NIF_ICON & pnidSource->uFlags && m_hOriginalIcon != pnidSource->hIcon)
+    if (NIF_ICON & pnidSource->uFlags && m_hOriginalIcon != (HICON)pnidSource->hIcon)
     {
         HICON hNewIcon = NULL;
         
@@ -135,7 +135,7 @@ void NotifyIcon::copy_icon(PCNID_XX pnidSource)
             {
                 const NotifyIcon* p = *it;
                 
-                if (p->m_hOriginalIcon == pnidSource->hIcon)
+                if (p->m_hOriginalIcon == (HICON)pnidSource->hIcon)
                 {
                     m_hSharedWnd = (HANDLE)p->m_hWnd;
                     m_uSharedID = p->m_uID;
@@ -146,7 +146,7 @@ void NotifyIcon::copy_icon(PCNID_XX pnidSource)
         }
         else
         {
-            hNewIcon = CopyIcon(pnidSource->hIcon);
+            hNewIcon = CopyIcon((HICON)pnidSource->hIcon);
         }
         
         // Update if we have a new icon, or we were told
@@ -159,7 +159,7 @@ void NotifyIcon::copy_icon(PCNID_XX pnidSource)
             }
             
             m_hIcon = hNewIcon;
-            m_hOriginalIcon = pnidSource->hIcon;
+            m_hOriginalIcon = (HICON)pnidSource->hIcon;
         }
         
         if (!m_hIcon)

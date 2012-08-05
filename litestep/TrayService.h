@@ -201,7 +201,7 @@ private:
     
     inline IconVector::iterator findIcon(const NID_XX& nid)
     {
-        return findIcon(nid.hWnd, nid.uID);
+        return findIcon((HWND)nid.hWnd, nid.uID);
     }
     
     //
