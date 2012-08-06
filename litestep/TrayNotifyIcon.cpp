@@ -98,6 +98,9 @@ void NotifyIcon::Update(const NID_XX& nidSource)
     // Copy persistent values only
     //
     
+    // GUID
+    copy_guid(&nidSource);
+    
     // state values
     copy_state(&nidSource);
     
@@ -118,6 +121,27 @@ void NotifyIcon::copy_message(PCNID_XX pnidSource)
     {
         m_uCallbackMessage = pnidSource->uCallbackMessage;
         m_uFlags |= NIF_MESSAGE;
+    }
+}
+
+void NotifyIcon::copy_guid(PCNID_XX pnidSource)
+{
+    if ((pnidSource->uFlags & NIF_GUID) == NIF_GUID)
+    {
+        switch (pnidSource->cbSize)
+        {
+        case NID_7W_SIZE:
+        case NID_6W_SIZE:
+            m_guidItem = ((NID_6W*)pnidSource)->guidItem;
+            break;
+            
+        case NID_6A_SIZE:
+            m_guidItem = ((NID_6A*)pnidSource)->guidItem;
+            break;
+            
+        default:
+            break;
+        }
     }
 }
 

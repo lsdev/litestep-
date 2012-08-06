@@ -288,6 +288,11 @@ public:
         return m_uID;
     }
     
+    inline GUID GetGUID() const
+    {
+        return m_guidItem;
+    }
+    
     inline void CopyLSNID(LSNOTIFYICONDATA * plsnid) const
     {
         CopyLSNID(plsnid, (UINT)-1);
@@ -296,6 +301,7 @@ public:
     void CopyLSNID(LSNOTIFYICONDATA * plsnid, UINT uFlagMask) const;
     
 private:
+    void copy_guid(PCNID_XX pnidSource);
     void copy_message(PCNID_XX pnidSource);
     void copy_icon(PCNID_XX pnidSource);
     void copy_tip(PCNID_XX pnidSource);
@@ -306,6 +312,7 @@ private:
     // Preserved Notify Icon Data members
     const HWND  m_hWnd;                          /* persistent & non volatile */
     const UINT  m_uID;                           /* persistent & non volatile */
+    GUID  m_guidItem;                            /* ?          & ?            */
     
     UINT  m_uFlags;                              /* persistent &     volatile */
     UINT  m_uCallbackMessage;                    /* persistent &     volatile */

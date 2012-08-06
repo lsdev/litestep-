@@ -72,6 +72,7 @@
 #define LM_SENDSYSTRAY              9213
 #define LM_SYSTRAY                  9214
 #define LM_SYSTRAYREADY             9215
+#define LM_SYSTRAYINFOEVENT         9216
 
 // Shell Hook Messages (obsolete!)
 #define LM_SHELLMESSAGE             9219
