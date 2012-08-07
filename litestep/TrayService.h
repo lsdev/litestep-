@@ -47,7 +47,7 @@ typedef struct _NOTIFYICONIDENTIFIER_MSGV1
     DWORD dwMessage;
     DWORD cbSize;
     DWORD dwPadding;
-    HWND hWnd;
+    HWND32 hWnd;
     UINT uID;
     GUID guidItem;
 } NOTIFYICONIDENTIFIER_MSGV1, *LPNOTIFYICONIDENTIFIER_MSGV1;

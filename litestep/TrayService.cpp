@@ -651,30 +651,50 @@ HRESULT TrayService::HandleLoadInProc(REFCLSID clsid, DWORD dwMessage)
     return E_NOTIMPL;
 }
 
+
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 //
 // TrayInfoEvent
 //
 // Handles tray info events
 //
-LRESULT TrayService::TrayInfoEvent(DWORD /* cbData */, LPVOID lpData) // size, data
+LRESULT TrayService::TrayInfoEvent(DWORD /*cbData*/, LPVOID lpData) // size, data
 {
     LRESULT lr = 0;
     LPNOTIFYICONIDENTIFIER_MSGV1 s = (LPNOTIFYICONIDENTIFIER_MSGV1)lpData;
     
-	// TODO::Send LM_SYSTRAYINFOEVENT to any registered listener instead.
+    // TODO::Send LM_SYSTRAYINFOEVENT to any registered listener instead.
     
-    if (s->dwMessage == 2) // Icon size?
+    TRACE("dwMessage(%u) sent to TrayInfoEvent (HWND: %x) (dwMagic: %x) (cbSize: %x) (dwPadding: %x) (uID: 0x%x) %d %x %x",
+        s->dwMessage, s->hWnd, s->dwMagic, s->cbSize, s->dwPadding, s->uID, sizeof(NOTIFYICONIDENTIFIER_MSGV1));
+    
+    // Calling Shell_NotifyIconGetRect will cause two successive calls to this function. The first
+    // (dwMessage 2) should return the top left coordinate of the specified icon. The 2nd should
+    // return the width and height of the icon.
+    
+    switch (s->dwMessage)
     {
-        return MAKELONG(16,16);
-    }
-    
-    POINT p;
-    GetCursorPos(&p);
-    
-    if (s->dwMessage == 1) // Icon position
-    {
-        return MAKELPARAM(p.x, p.y);
+    case 1:
+        {
+            // Icon position
+            POINT p;
+            GetCursorPos(&p);
+			lr = MAKELPARAM(p.x, p.y);
+        }
+        break;
+        
+    case 2:
+        {
+            // Width, Height
+            lr = MAKELPARAM(16, 16);
+        }
+        break;
+        
+    default:
+        {
+            TRACE("Unknown dwMessage(%u) sent to TrayInfoEvent", s->dwMessage);
+        }
+        break;
     }
     
     return lr;
