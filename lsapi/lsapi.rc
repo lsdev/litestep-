@@ -48,11 +48,11 @@ BEGIN
             VALUE "FileDescription", "LiteStep Module API"
             VALUE "FileVersion", "0.25.0 Alpha"
             VALUE "InternalName", "LiteStep API"
-            VALUE "LegalCopyright", "Copyright © 1997 - 2011"
+            VALUE "LegalCopyright", "Copyright © 1997 - 2012"
             VALUE "OriginalFilename", "lsapi.dll"
             VALUE "ProductName", "LiteStep"
             VALUE "ProductVersion", "0.25.0 Alpha"
-            VALUE "SpecialBuild", "CVS HEAD Test Release"
+            VALUE "SpecialBuild", "alur's windows 8/x64 branch"
         END
     END
     BLOCK "VarFileInfo"
