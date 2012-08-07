@@ -907,7 +907,9 @@ Contents:
    Win2000
    Win2003
    Win2008
+   Win2012
    Win7
+   Win8
    Win95
    Win98
    WinME
@@ -1208,6 +1210,7 @@ ENDIF
  The Current Team:
  -----------------
  - Alexander Vermaat (Acidfire)
+ - Erik Welander (alur)
  - Chris Rempel (jugg)
  - Simon (ilmcuts)
  - Tobbe Lundberg (Tobbe)
