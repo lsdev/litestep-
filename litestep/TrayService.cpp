@@ -665,8 +665,8 @@ LRESULT TrayService::TrayInfoEvent(DWORD /*cbData*/, LPVOID lpData) // size, dat
     
     // TODO::Send LM_SYSTRAYINFOEVENT to any registered listener instead.
     
-    TRACE("dwMessage(%u) sent to TrayInfoEvent (HWND: %x) (dwMagic: %x) (cbSize: %x) (dwPadding: %x) (uID: 0x%x) %d %x %x",
-        s->dwMessage, s->hWnd, s->dwMagic, s->cbSize, s->dwPadding, s->uID, sizeof(NOTIFYICONIDENTIFIER_MSGV1));
+    TRACE("dwMessage(%u) sent to TrayInfoEvent (HWND: %x) (dwMagic: %x) (cbSize: %x) (dwPadding: %x) (uID: 0x%x)",
+        s->dwMessage, s->hWnd, s->dwMagic, s->cbSize, s->dwPadding, s->uID);
     
     // Calling Shell_NotifyIconGetRect will cause two successive calls to this function. The first
     // (dwMessage 2) should return the top left coordinate of the specified icon. The 2nd should
@@ -679,7 +679,7 @@ LRESULT TrayService::TrayInfoEvent(DWORD /*cbData*/, LPVOID lpData) // size, dat
             // Icon position
             POINT p;
             GetCursorPos(&p);
-			lr = MAKELPARAM(p.x, p.y);
+            lr = MAKELPARAM(p.x, p.y);
         }
         break;
         
@@ -717,7 +717,7 @@ LRESULT TrayService::HandleAppBarCopydata(DWORD cbData, LPVOID lpData)
             
             if (sizeof(APPBARDATAV2) != pamd->abd.cbSize)
             {
-                TRACE("PAPPBARMSGDATAV3 - Invalid ABD size: %u", pamd->abd.cbSize);
+                TRACE("APPBARMSGDATAV3 - Invalid ABD size: %u. Expected: %u", pamd->abd.cbSize, sizeof(APPBARDATAV2));
                 
                 break;
             }
@@ -737,7 +737,7 @@ LRESULT TrayService::HandleAppBarCopydata(DWORD cbData, LPVOID lpData)
             
             if (sizeof(APPBARDATAV2) != pamd->abd.cbSize)
             {
-                TRACE("APPBARMSGDATAV2 - Invalid ABD size: %u", pamd->abd.cbSize);
+                TRACE("APPBARMSGDATAV2 - Invalid ABD size: %u. Expected: %u", pamd->abd.cbSize, sizeof(APPBARDATAV2));
                 
                 break;
             }
@@ -757,7 +757,7 @@ LRESULT TrayService::HandleAppBarCopydata(DWORD cbData, LPVOID lpData)
             
             if (sizeof(APPBARDATAV1) != pamd->abd.cbSize)
             {
-                TRACE("APPBARMSGDATAV1 - Invalid ABD size: %u", pamd->abd.cbSize);
+                TRACE("APPBARMSGDATAV1 - Invalid ABD size: %u. Expected: %u", pamd->abd.cbSize, sizeof(APPBARDATAV1));
                 
                 break;
             }

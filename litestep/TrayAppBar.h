@@ -33,6 +33,7 @@
 // Maintains 32bit handles on 64bit builds
 typedef DWORD HANDLE32;
 typedef DWORD HWND32;
+typedef LONG LPARAM32;
 
 typedef struct _APPBARDATAV1
 {
@@ -41,7 +42,7 @@ typedef struct _APPBARDATAV1
     UINT uCallbackMessage;
     UINT uEdge;
     RECT rc;
-    LPARAM lParam;
+    LPARAM32 lParam;
 } APPBARDATAV1, *PAPPBARDATAV1;
 
 typedef struct _APPBARDATAV2
@@ -51,7 +52,7 @@ typedef struct _APPBARDATAV2
     UINT uCallbackMessage;
     UINT uEdge;
     RECT rc;
-    LPARAM lParam;
+    LPARAM32 lParam;
     DWORD dw64BitAlign;
 } APPBARDATAV2, *PAPPBARDATAV2;
 
