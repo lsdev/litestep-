@@ -95,6 +95,31 @@ NotifyIcon::~NotifyIcon()
 
 void NotifyIcon::Update(const NID_XX& nidSource)
 {
+
+    // Check the size of nidSource if we are debuging.
+#ifdef _DEBUG
+    switch (nidSource.cbSize)
+    {
+    case NID_7W_SIZE:
+    case NID_6W_SIZE:
+    case NID_6A_SIZE:
+    case NID_5W_SIZE:
+    case NID_5A_SIZE:
+    case NID_4W_SIZE:
+    case NID_4A_SIZE:
+        {
+            // Do nothing
+        }
+        break;
+
+    default:
+        {
+            TRACE("NotifyIcon::Update - Unknown cbSize: %u", nidSource.cbSize);
+        }
+        break;
+    }
+#endif
+
     //
     // Copy persistent values only
     //
@@ -195,6 +220,29 @@ void NotifyIcon::copy_icon(PCNID_XX pnidSource)
         {
             m_uFlags |= NIF_ICON;
         }
+    }
+
+    switch (pnidSource->cbSize)
+    {
+    case NID_7W_SIZE:
+        {
+            HICON hBalloon = (HICON)((NID_7W*)pnidSource)->hBalloonIcon;
+            
+            if (m_hOriginalBalloonIcon != hBalloon)
+            {
+                // Not sure why the original icon is copied, but I set it up this way
+                // anyway.
+                m_hOriginalBalloonIcon = hBalloon;
+                m_hBalloonIcon = hBalloon;
+            }
+        }
+        break;
+
+    default:
+        {
+            // Do nothing
+        }
+        break;
     }
 }
 
@@ -347,6 +395,7 @@ void NotifyIcon::CopyLSNID(LSNOTIFYICONDATA * plsnid, UINT uFlagMask) const
     plsnid->uID = m_uID;
     plsnid->guidItem = m_guidItem;
     plsnid->uFlags = 0;
+    plsnid->hBalloonIcon = m_hBalloonIcon;
     
     if (NIF_MESSAGE & m_uFlags & uFlagMask)
     {

@@ -60,6 +60,8 @@ typedef struct
     // new in XP:
     GUID guidItem;                               /* persistent & non volatile */
 
+    // new in Vista
+    HICON hBalloonIcon;                          /* arbitrary  &     volatile */
     /**/
 } LSNOTIFYICONDATA, *PLSNOTIFYICONDATA;
 typedef const LSNOTIFYICONDATA * PCLSNOTIFYICONDATA;
@@ -313,7 +315,7 @@ private:
     // Preserved Notify Icon Data members
     const HWND  m_hWnd;                          /* persistent & non volatile */
     const UINT  m_uID;                           /* persistent & non volatile */
-    GUID  m_guidItem;                            /* ?          & ?            */
+    GUID  m_guidItem;                            /* persistent & non volatile */
     
     UINT  m_uFlags;                              /* persistent &     volatile */
     UINT  m_uCallbackMessage;                    /* persistent &     volatile */
@@ -321,9 +323,11 @@ private:
     CHAR  m_szTip[TRAY_MAX_TIP_LENGTH];          /* persistent &     volatile */
     
     DWORD m_dwState;                             /* persistent &     volatile */
+    HICON m_hBalloonIcon;                        /* persistent &     volatile */
     
     // Internal tracking
     HANDLE m_hOriginalIcon;
+    HANDLE m_hOriginalBalloonIcon;
     HANDLE m_hSharedWnd;
     UINT   m_uSharedID;
     
