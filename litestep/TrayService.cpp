@@ -662,41 +662,21 @@ LRESULT TrayService::TrayInfoEvent(DWORD /*cbData*/, LPVOID lpData) // size, dat
 {
     LRESULT lr = 0;
     LPNOTIFYICONIDENTIFIER_MSGV1 s = (LPNOTIFYICONIDENTIFIER_MSGV1)lpData;
-    
-    // TODO::Send LM_SYSTRAYINFOEVENT to any registered listener instead.
-    
-    TRACE("dwMessage(%u) sent to TrayInfoEvent (HWND: %x) (dwMagic: %x) (cbSize: %x) (dwPadding: %x) (uID: 0x%x)",
-        s->dwMessage, s->hWnd, s->dwMagic, s->cbSize, s->dwPadding, s->uID);
+    SYSTRAYINFOEVENT sEvent;
     
     // Calling Shell_NotifyIconGetRect will cause two successive calls to this function. The first
-    // (dwMessage 2) should return the top left coordinate of the specified icon. The 2nd should
+    // (dwMessage 1) should return the top left coordinate of the specified icon. The 2nd should
     // return the width and height of the icon.
-    
-    switch (s->dwMessage)
-    {
-    case 1:
-        {
-            // Icon position
-            POINT p;
-            GetCursorPos(&p);
-            lr = MAKELPARAM(p.x, p.y);
-        }
-        break;
-        
-    case 2:
-        {
-            // Width, Height
-            lr = MAKELPARAM(16, 16);
-        }
-        break;
-        
-    default:
-        {
-            TRACE("Unknown dwMessage(%u) sent to TrayInfoEvent", s->dwMessage);
-        }
-        break;
-    }
-    
+
+    // Let registered listeners handle this.
+    sEvent.cbSize = sizeof(SYSTRAYINFOEVENT);
+    sEvent.dwEvent = s->dwMessage;
+    sEvent.guidItem = s->guidItem;
+    sEvent.hWnd = (HWND)s->hWnd;
+    sEvent.uID = s->uID;
+
+    SendMessage(m_hLiteStep, LM_SYSTRAYINFOEVENT, (WPARAM)&sEvent, (LPARAM)&lr);
+
     return lr;
 }
 

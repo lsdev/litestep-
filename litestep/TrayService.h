@@ -52,6 +52,16 @@ typedef struct _NOTIFYICONIDENTIFIER_MSGV1
     GUID guidItem;
 } NOTIFYICONIDENTIFIER_MSGV1, *LPNOTIFYICONIDENTIFIER_MSGV1;
 
+// Used for LM_SYSTRAYINFOEVENT
+typedef struct _SYSTRAYINFOEVENT
+{
+    DWORD cbSize;
+    DWORD dwEvent;
+    HWND hWnd;
+    UINT uID;
+    GUID guidItem;
+} SYSTRAYINFOEVENT, *LPSYSTRAYINFOEVENT;
+
 // data sent by shell via Shell_NotifyIcon
 typedef struct _SHELLTRAYDATA
 {

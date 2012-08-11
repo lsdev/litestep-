@@ -217,6 +217,14 @@ typedef struct _LMBANGCOMMANDW
 #define PLMBANGCOMMAND              PLMBANGCOMMANDA
 #endif // _UNICODE
 
+
+//-----------------------------------------------------------------------------
+// LM_SYSTRAYINFOEVENT DEFINES
+//-----------------------------------------------------------------------------
+#define TRAYEVENT_GETICONPOS        1
+#define TRAYEVENT_GETICONSIZE       2
+
+
 //-----------------------------------------------------------------------------
 // VWM DEFINES
 //-----------------------------------------------------------------------------
