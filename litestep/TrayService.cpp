@@ -459,6 +459,7 @@ LRESULT CALLBACK TrayService::WindowTrayProc(HWND hWnd, UINT uMsg,
                         }
                     }
                     break;
+                    
                 case SH_TRAYINFO_DATA:
                     {
                         lResult = pTrayService->TrayInfoEvent(pcds->cbData, pcds->lpData);

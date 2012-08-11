@@ -58,7 +58,8 @@ typedef struct
     DWORD dwInfoFlags;                           /* arbitrary  &     volatile */
     
     // new in XP:
-    GUID guidItem;                               /* ???? */
+    GUID guidItem;                               /* persistent & non volatile */
+
     /**/
 } LSNOTIFYICONDATA, *PLSNOTIFYICONDATA;
 typedef const LSNOTIFYICONDATA * PCLSNOTIFYICONDATA;

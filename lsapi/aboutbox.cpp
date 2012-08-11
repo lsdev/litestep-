@@ -913,7 +913,10 @@ static int GetClientWidth(HWND hWnd)
 // FormatBytes
 // Formats a byte count into a string suitable for display to the user
 //
-static LPCSTR units[] = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+// Note: Max value of stBytes is 16 EB, so no need to be concerned of
+//       overrunning units[] index.
+//
+static LPCSTR units[] = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB" };
 
 static void FormatBytes(DWORDLONG stBytes, LPSTR pszBuffer, size_t cchBuffer)
 {
@@ -926,7 +929,7 @@ static void FormatBytes(DWORDLONG stBytes, LPSTR pszBuffer, size_t cchBuffer)
         ++uUnit;
     }
     
-    if (uUnit == 3)
+    if (uUnit >= 3)
     {
         StringCchPrintf(
             pszBuffer, cchBuffer,

@@ -271,7 +271,7 @@ typedef struct LSDESKTOPINFO
 #define ELD_MODULES                 2
 #define ELD_REVIDS                  3
 #define ELD_BANGS_V2                4
-#define ELD_PERFORMANCE				5
+#define ELD_PERFORMANCE             5
 
 // ELD_MODULES: possible dwFlags values
 #define LS_MODULE_THREADED          0x0001
