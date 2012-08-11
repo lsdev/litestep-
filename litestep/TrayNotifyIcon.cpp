@@ -69,6 +69,7 @@ NotifyIcon::NotifyIcon(const NID_XX& nidSource)
     ,m_uSharedID(0)
 {
     m_szTip[0] = 0;
+    ZeroMemory(&m_guidItem, sizeof(GUID));
     Update(nidSource);
     
     s_icVtr.push_back(this);
@@ -344,6 +345,7 @@ void NotifyIcon::CopyLSNID(LSNOTIFYICONDATA * plsnid, UINT uFlagMask) const
     plsnid->cbSize = sizeof(LSNOTIFYICONDATA);
     plsnid->hWnd = m_hWnd;
     plsnid->uID = m_uID;
+    plsnid->guidItem = m_guidItem;
     plsnid->uFlags = 0;
     
     if (NIF_MESSAGE & m_uFlags & uFlagMask)
