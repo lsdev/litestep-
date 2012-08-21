@@ -720,6 +720,7 @@ HRESULT EnumLSData(UINT uInfo, FARPROC pfnCallback, LPARAM lParam)
                 hr = (HRESULT)SendMessage(GetLitestepWnd(), LM_ENUMPERFORMANCE,
                     (WPARAM)pfnCallback, lParam);
             }
+            break;
             
         default:
             {
