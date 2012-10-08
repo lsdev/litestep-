@@ -175,7 +175,13 @@ bool Module::Init(HWND hMainWindow, const std::string& sAppPath)
 {
     ASSERT(NULL == m_hInstance);
     
-    DWORD dwStartTime = GetTickCount();
+    DWORD dwStartTime = 0;
+    __int64 iStartTime, iEndTime, iFrequency;
+
+    if (QueryPerformanceCounter((LARGE_INTEGER*)&iStartTime) == FALSE)
+    {
+        dwStartTime = GetTickCount();
+    }
     
     // delaying the LoadLibrary call until this point is necessary to make
     // grdtransparent work (it hooks LoadLibrary)
@@ -207,7 +213,15 @@ bool Module::Init(HWND hMainWindow, const std::string& sAppPath)
             CallInit();
         }
         
-        m_dwLoadTime = GetTickCount() - dwStartTime;
+        if (QueryPerformanceCounter((LARGE_INTEGER*)&iEndTime) == FALSE ||
+            QueryPerformanceFrequency((LARGE_INTEGER*)&iFrequency) == FALSE)
+        {
+            m_dwLoadTime = GetTickCount() - dwStartTime;
+        }
+        else
+        {
+            m_dwLoadTime = (DWORD)((iEndTime - iStartTime)*1000/iFrequency);
+        }
         
         return true;
     }
