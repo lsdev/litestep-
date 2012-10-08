@@ -67,6 +67,7 @@ NotifyIcon::NotifyIcon(const NID_XX& nidSource)
     ,m_hOriginalIcon(NULL)
     ,m_hSharedWnd(NULL)
     ,m_uSharedID(0)
+    ,m_uVersion(0)
 {
     m_szTip[0] = 0;
     ZeroMemory(&m_guidItem, sizeof(GUID));
@@ -138,6 +139,9 @@ void NotifyIcon::Update(const NID_XX& nidSource)
     
     // tool tip string
     copy_tip(&nidSource);
+
+    // version
+    copy_version(&nidSource);
 }
 
 
@@ -147,6 +151,26 @@ void NotifyIcon::copy_message(PCNID_XX pnidSource)
     {
         m_uCallbackMessage = pnidSource->uCallbackMessage;
         m_uFlags |= NIF_MESSAGE;
+    }
+}
+
+void NotifyIcon::copy_version(PCNID_XX pnidSource)
+{
+    switch (pnidSource->cbSize)
+        {
+        case NID_7W_SIZE:
+        case NID_6W_SIZE:
+        case NID_5W_SIZE:
+            m_uVersion = ((NID_5W*)pnidSource)->uVersion;
+            break;
+            
+        case NID_6A_SIZE:
+        case NID_5A_SIZE:
+            m_uVersion = ((NID_5A*)pnidSource)->uVersion;
+            break;
+            
+        default:
+            break;
     }
 }
 
@@ -396,6 +420,7 @@ void NotifyIcon::CopyLSNID(LSNOTIFYICONDATA * plsnid, UINT uFlagMask) const
     plsnid->guidItem = m_guidItem;
     plsnid->uFlags = 0;
     plsnid->hBalloonIcon = m_hBalloonIcon;
+    plsnid->uVersion = m_uVersion;
     
     if (NIF_MESSAGE & m_uFlags & uFlagMask)
     {

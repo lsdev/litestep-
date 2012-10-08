@@ -300,6 +300,11 @@ public:
     {
         CopyLSNID(plsnid, (UINT)-1);
     }
+
+    inline void SetVersion(UINT uVersion)
+    {
+        this->m_uVersion = uVersion;
+    }
     
     void CopyLSNID(LSNOTIFYICONDATA * plsnid, UINT uFlagMask) const;
     
@@ -309,8 +314,10 @@ private:
     void copy_icon(PCNID_XX pnidSource);
     void copy_tip(PCNID_XX pnidSource);
     void copy_state(PCNID_XX pnidSource);
+    void copy_version(PCNID_XX pnidSource);
     
     void update_state(DWORD dwState, DWORD dwMask);
+    void set_version(UINT uVersion);
     
     // Preserved Notify Icon Data members
     const HWND  m_hWnd;                          /* persistent & non volatile */
@@ -324,6 +331,7 @@ private:
     
     DWORD m_dwState;                             /* persistent &     volatile */
     HICON m_hBalloonIcon;                        /* persistent &     volatile */
+    UINT m_uVersion;                             /* persistent &     volatile */
     
     // Internal tracking
     HANDLE m_hOriginalIcon;

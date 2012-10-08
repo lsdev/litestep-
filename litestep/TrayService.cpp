@@ -2254,11 +2254,13 @@ bool TrayService::setVersionIcon(const NID_XX& nid)
         case NID_6W_SIZE:
         case NID_5W_SIZE:
             lsnid.uVersion = ((NID_5W&)nid).uVersion;
+            (*it)->SetVersion(((NID_5W&)nid).uVersion);
             break;
             
         case NID_6A_SIZE:
         case NID_5A_SIZE:
             lsnid.uVersion = ((NID_5A&)nid).uVersion;
+            (*it)->SetVersion(((NID_5W&)nid).uVersion);
             break;
             
         default:
