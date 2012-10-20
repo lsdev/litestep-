@@ -26,6 +26,7 @@
 #include "DDEStub.h"
 #include "RecoveryMenu.h"
 #include "TrayService.h"
+#include "ExplorerService.h"
 
 // Managers
 #include "MessageManager.h"
@@ -355,10 +356,7 @@ HRESULT CLiteStep::Start(HINSTANCE hInstance, WORD wStartFlags)
     
     if (SUCCEEDED(hr))
     {
-        bool bSetAsShell =
-            (!bUnderExplorer && GetRCBool("LSSetAsShell", TRUE));
-        
-        hr = CreateMainWindow(bSetAsShell);
+        hr = CreateMainWindow();
     }
     
     //
@@ -366,7 +364,7 @@ HRESULT CLiteStep::Start(HINSTANCE hInstance, WORD wStartFlags)
     //
     if (SUCCEEDED(hr))
     {
-        hr = _InitServices();
+        hr = _InitServices(GetRCBool("LSSetAsShell", TRUE) && !bUnderExplorer);
         
         if (SUCCEEDED(hr))
         {
@@ -486,7 +484,7 @@ int CLiteStep::Run()
 //
 // CreateMainWindow
 //
-HRESULT CLiteStep::CreateMainWindow(bool bSetAsShell)
+HRESULT CLiteStep::CreateMainWindow()
 {
     HRESULT hr = E_FAIL;
     
@@ -525,25 +523,6 @@ HRESULT CLiteStep::CreateMainWindow(bool bSetAsShell)
         LSAPISetLitestepWindow(m_hMainWindow);
         
         _RegisterShellNotifications(m_hMainWindow);
-        
-        // Set Shell Window
-        if (bSetAsShell)
-        {
-            typedef BOOL (WINAPI* SETSHELLWINDOWPROC)(HWND);
-            
-            SETSHELLWINDOWPROC fnSetShellWindow =
-                (SETSHELLWINDOWPROC)GetProcAddress(
-                GetModuleHandle(_T("USER32.DLL")), "SetShellWindow");
-            
-            if (fnSetShellWindow)
-            {
-                fnSetShellWindow(m_hMainWindow);
-            }
-            else
-            {
-                TRACE("SetShellWindow() not found");
-            }
-        }
         
         hr = S_OK;
     }
@@ -1115,7 +1094,7 @@ LRESULT CLiteStep::_HandleSessionChange(DWORD dwCode, DWORD /* dwSession */)
 //
 // _InitServies()
 //
-HRESULT CLiteStep::_InitServices()
+HRESULT CLiteStep::_InitServices(bool bSetAsShell)
 {
     IService* pService = NULL;
     
@@ -1158,7 +1137,24 @@ HRESULT CLiteStep::_InitServices()
             return E_OUTOFMEMORY;
         }
     }
-    
+
+    //
+    // Explorer Service
+    //
+    if (bSetAsShell)
+    {
+        pService = new ExplorerService();
+
+        if (pService)
+        {
+            m_Services.push_back(pService);
+        }
+        else
+        {
+            return E_OUTOFMEMORY;
+        }
+    }
+
     return S_OK;
 }
 

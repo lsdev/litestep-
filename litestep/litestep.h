@@ -81,7 +81,7 @@ public:
 private:
     void MessageHandler(MSG &message);
     
-    HRESULT CreateMainWindow(bool bSetAsShell);
+    HRESULT CreateMainWindow();
     HRESULT DestroyMainWindow();
     
     void _RegisterShellNotifications(HWND hWnd);
@@ -143,7 +143,7 @@ private:
     TrayService* m_pTrayService; // = NULL;
     std::vector<IService*> m_Services;
     
-    HRESULT _InitServices();
+    HRESULT _InitServices(bool bSetAsShell);
     HRESULT _StartServices();
     HRESULT _StopServices();
     void _CleanupServices();
