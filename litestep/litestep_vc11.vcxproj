@@ -80,7 +80,7 @@
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>../Debug_VC11_64\</OutDir>
+    <OutDir>C:\LiteStep64\debug</OutDir>
     <IntDir>Debug_VC11_64\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -228,11 +228,13 @@
     <ClCompile Include="DDEService.cpp" />
     <ClCompile Include="DDEStub.cpp" />
     <ClCompile Include="DDEWorker.cpp" />
+    <ClCompile Include="ExplorerService.cpp" />
     <ClCompile Include="litestep.cpp" />
     <ClCompile Include="MessageManager.cpp" />
     <ClCompile Include="Module.cpp" />
     <ClCompile Include="ModuleManager.cpp" />
     <ClCompile Include="RecoveryMenu.cpp" />
+    <ClCompile Include="ShellDesktopTray.cpp" />
     <ClCompile Include="StartupRunner.cpp" />
     <ClCompile Include="TrayNotifyIcon.cpp" />
     <ClCompile Include="TrayService.cpp" />
@@ -244,11 +246,13 @@
     <ClInclude Include="DDEService.h" />
     <ClInclude Include="DDEStub.h" />
     <ClInclude Include="DDEWorker.h" />
+    <ClInclude Include="ExplorerService.h" />
     <ClInclude Include="litestep.h" />
     <ClInclude Include="MessageManager.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="ModuleManager.h" />
     <ClInclude Include="RecoveryMenu.h" />
+    <ClInclude Include="ShellDesktopTray.h" />
     <ClInclude Include="StartupRunner.h" />
     <ClInclude Include="TrayAppBar.h" />
     <ClInclude Include="TrayNotifyIcon.h" />

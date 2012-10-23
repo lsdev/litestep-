@@ -31,10 +31,10 @@ const IID IID_IShellDesktopTray = {0x213E2DF9,0x9A14,0x4328,{0x99,0xB1,0x69,0x61
 class IShellDesktopTray : public IUnknown
 {
 public:
-    virtual __declspec(nothrow) ULONG GetState(void) = 0;
-    virtual __declspec(nothrow) HRESULT GetTrayWindow(HWND *phWnd) = 0;
-    virtual __declspec(nothrow) HRESULT RegisterDesktopWindow(HWND hDesktopWindow) = 0;
-    virtual __declspec(nothrow) HRESULT SetVar(int, ULONG) = 0;
+    virtual __declspec(nothrow) ULONG STDMETHODCALLTYPE GetState(void) = 0;
+    virtual __declspec(nothrow) HRESULT STDMETHODCALLTYPE GetTrayWindow(HWND *phWnd) = 0;
+    virtual __declspec(nothrow) HRESULT STDMETHODCALLTYPE RegisterDesktopWindow(HWND hDesktopWindow) = 0;
+    virtual __declspec(nothrow) HRESULT STDMETHODCALLTYPE SetVar(int, ULONG) = 0;
 };
 
 
@@ -45,15 +45,15 @@ public:
     ~TShellDesktopTray();
 
     // IUnknown
-    HRESULT __stdcall QueryInterface(REFIID riid, LPVOID *ppvObj);
-    ULONG __stdcall AddRef();
-    ULONG __stdcall Release();
+    HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, LPVOID *ppvObj);
+    ULONG STDMETHODCALLTYPE AddRef();
+    ULONG STDMETHODCALLTYPE Release();
 
     // IShellDesktopTray
-    ULONG __stdcall GetState();
-    HRESULT __stdcall GetTrayWindow(HWND *phWnd);
-    HRESULT __stdcall RegisterDesktopWindow(HWND hDesktopWindow);
-    HRESULT __stdcall SetVar(int p1, ULONG p2);
+    ULONG STDMETHODCALLTYPE GetState();
+    HRESULT STDMETHODCALLTYPE GetTrayWindow(HWND *phWnd);
+    HRESULT STDMETHODCALLTYPE RegisterDesktopWindow(HWND hDesktopWindow);
+    HRESULT STDMETHODCALLTYPE SetVar(int p1, ULONG p2);
 
 private:
     ULONG m_uRefCount;
