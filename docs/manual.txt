@@ -2,7 +2,7 @@
     LiteStep 0.25.0
     Release Notes
     
-    Copyright (c) 2012 - LiteStep Development Team
+    Copyright (c) 2013 - LiteStep Development Team
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 Contents:
@@ -781,13 +781,19 @@ Contents:
 
    Usage:
     LSAutoHideModules TRUE
+    
+  LSCloseExplorer <boolean>
+  --------------------------
+   If explorer is running as shell when LiteStep launches, LiteStep will attempt
+   to close it.
+
+   Usage:
+    LSCloseExplorer TRUE
 
   LSNoShellWarning <boolean>
   --------------------------
    Disables the warning issued when loading LiteStep if another shell is already
    running.  Do not use this setting unless you know what you are doing!
-
-   Note: LiteStep must be restarted for this setting to take affect.
 
    Usage:
     LSNoShellWarning TRUE
