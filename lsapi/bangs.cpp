@@ -2,7 +2,7 @@
 //
 // This is a part of the Litestep Shell source code.
 //
-// Copyright (C) 1997-2012  LiteStep Development Team
+// Copyright (C) 1997-2013  LiteStep Development Team
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -315,11 +315,54 @@ static void BangRun(HWND /* hCaller */, LPCSTR pszArgs)
     {
         HWND hParent = CreateWindowEx(WS_EX_TOOLWINDOW, "Static", "",
             WS_POPUP, nX, nY, 1, 1, NULL, NULL, GetModuleHandle(NULL), NULL);
+        SetWindowLongPtr(hParent, GWLP_USERDATA, 0);
+        SetWindowLongPtr(hParent, GWLP_WNDPROC, (LONG_PTR)(WNDPROC) [] (HWND window, UINT message, WPARAM wParam, LPARAM lParam) -> LRESULT
+        {
+            if (message == WM_TIMER)
+            {
+                HWND hDialog = GetWindow(window, GW_ENABLEDPOPUP);
+                if (hDialog != nullptr)
+                {
+                    KillTimer(window, 1);
+
+                    if (GetWindowLongPtr(window, GWLP_USERDATA) == 0)
+                    {
+                        SetWindowLongPtr(hDialog, GWLP_USERDATA, GetWindowLongPtr(hDialog, GWLP_WNDPROC));
+                        SetWindowLongPtr(hDialog, GWLP_WNDPROC, (LONG_PTR)(WNDPROC) [] (HWND window, UINT message, WPARAM wParam, LPARAM lParam) -> LRESULT
+                        {
+                            if (message == WM_COMMAND && LOWORD(wParam) == 1 && HIWORD(wParam) == 0)
+                            {
+                                // Pressed OK, handle it ourselves and forward a cancel instead.
+                                HWND hEditBox = GetDlgItem(window, 0x300A);
+                                if (hEditBox != nullptr)
+                                {
+                                    int textLength = GetWindowTextLength(hEditBox) + 1;
+                                    LPSTR text = (LPSTR)malloc(textLength*sizeof(char));
+                                    GetWindowText(hEditBox, text, textLength);
+
+                                    // Only handle bang commands ourselfs, as anything else will prevent the RunMRU from populating properly.
+                                    if (text[0] == '!') {
+                                        LSExecute(nullptr, text, SW_SHOWNORMAL);
+                                        wParam = MAKEWPARAM(2, 0); // Click on cancel
+                                    }
+                                    free(text);
+                                }
+                            }
+                            return WNDPROC(GetWindowLongPtr(window, GWLP_USERDATA))(window, message, wParam, lParam);
+                        });
+                        SetWindowLongPtr(window, GWLP_USERDATA, 1);
+                    }
+                }
+            }
+            return DefWindowProc(window, message, wParam, lParam);
+        });
+        SetTimer(hParent, 1, 10, nullptr);
 
         // RunDlg(parent, icon, ?, ?, Description, ?);
         RunDlg(hParent, NULL, NULL, NULL, NULL, 0);
 
-        if (hParent) {
+        if (hParent)
+        {
             DestroyWindow(hParent);
         }
     }
