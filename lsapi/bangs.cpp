@@ -341,7 +341,8 @@ static void BangRun(HWND /* hCaller */, LPCSTR pszArgs)
                                     GetWindowText(hEditBox, text, textLength);
 
                                     // Only handle bang commands ourselfs, as anything else will prevent the RunMRU from populating properly.
-                                    if (text[0] == '!') {
+                                    if (text[0] == '!')
+                                    {
                                         LSExecute(nullptr, text, SW_SHOWNORMAL);
                                         wParam = MAKEWPARAM(2, 0); // Click on cancel
                                     }
