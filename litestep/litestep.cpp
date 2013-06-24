@@ -346,7 +346,7 @@ HRESULT CLiteStep::Start(HINSTANCE hInstance, WORD wStartFlags)
                 GetModuleFileNameEx(hShellProc, NULL, szProcessPath, _countof(szProcessPath));
                 LPCSTR pszPathName = PathFindFileName(szProcessPath);
 
-                if (strcmp(pszPathName, "explorer.exe") == 0)
+                if (_stricmp(pszPathName, "explorer.exe") == 0)
                 {
                     if (IsVistaOrAbove())
                     {
