@@ -24,6 +24,7 @@
 
 #include "TrayNotifyIcon.h"
 #include "TrayAppBar.h"
+#include "TaskbarListHandler.h"
 #include "../utility/common.h"
 #include "../utility/IService.h"
 #include <ObjBase.h>
@@ -122,8 +123,9 @@ public:
     //
     // IService methods
     //
-    virtual HRESULT Start();
-    virtual HRESULT Stop();
+    virtual HRESULT Start() override;
+    virtual HRESULT Stop() override;
+    virtual HRESULT Recycle() override;
     
     // resend all icon data
     HWND SendSystemTray();
@@ -239,6 +241,7 @@ private:
     SsoVector m_ssoVector;
     IconVector m_siVector;
     BarVector m_abVector;
+    TaskbarListHandler m_taskbarListHandler;
 };
 
 #endif // TRAYSERVICE_H

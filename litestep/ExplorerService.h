@@ -25,6 +25,7 @@
 #include "ExplorerService.h"
 #include "../utility/common.h"
 #include "../utility/IService.h"
+#include <thread>
 
 
 class ExplorerService : public IService
@@ -36,8 +37,13 @@ public:
     //
     // IService methods
     //
-    virtual HRESULT Start();
-    virtual HRESULT Stop();
+public:
+    HRESULT Start() override;
+    HRESULT Stop() override;
+    HRESULT Recycle() override;
+
+private:
+    static DWORD WINAPI ExplorerThread(LPVOID);
 
 private:
     DWORD m_dwThreadID;

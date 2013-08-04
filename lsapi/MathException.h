@@ -36,10 +36,17 @@ public:
     /**
      * Constructs a MathException with the specified message.
      */
-    MathException(const std::string& message) throw() : std::runtime_error(message)
+    MathException(const std::wstring& message) throw() : std::runtime_error(std::string(message.begin(), message.end()))
     {
-        // do nothing
+        this->sMessage = message;
     }
+
+    const std::wstring & GetException() const
+    {
+        return sMessage;
+    }
+
+    std::wstring sMessage;
 };
 
 

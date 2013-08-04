@@ -32,8 +32,9 @@ public:
     DDEService();
     ~DDEService();
     
-    HRESULT Start();
-    HRESULT Stop();
+    HRESULT Start() override;
+    HRESULT Stop() override;
+    HRESULT Recycle() override;
     
     static HDDEDATA CALLBACK DdeCallback(
         UINT wType, UINT wFmt, HCONV hConv, HSZ hszTopic,

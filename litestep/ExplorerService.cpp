@@ -24,26 +24,34 @@
 #include "ShellDesktopTray.h"
 
 
-DWORD WINAPI ExplorerThread(LPVOID);
-
-
+//
+// ExplorerService
+//
 ExplorerService::ExplorerService() : 
     m_dwThreadID(0),
-    m_hExplorerThread(NULL)
+    m_hExplorerThread(nullptr)
 {
 }
 
 
+//
+// ~ExplorerService
+//
 ExplorerService::~ExplorerService()
 {
 }
 
 
+//
+// IService::Stop
+//
 HRESULT ExplorerService::Stop()
 {
     if (m_dwThreadID)
     {
-        PostThreadMessage(m_dwThreadID, WM_QUIT, 0, 0);
+        HWND hProgman = FindWindow(_T("Progman"), NULL);
+        SendMessage(hProgman, 0x44D, 0, 0);
+        PostMessage(hProgman, WM_QUIT, 0, 1);
     }
 
     if (m_hExplorerThread)
@@ -53,31 +61,49 @@ HRESULT ExplorerService::Stop()
             TerminateThread(m_hExplorerThread, 0);
         }
 
+        TRACE("%p", GetShellWindow());
+
         CloseHandle(m_hExplorerThread);
-        m_hExplorerThread = NULL;
+        m_hExplorerThread = nullptr;
     }
 
     return S_OK;
 }
 
 
+//
+// IService::Start
+//
 HRESULT ExplorerService::Start()
 {
-    CreateThread(NULL, 0, ExplorerThread, NULL, 0, &m_dwThreadID);
+    m_hExplorerThread = CreateThread(NULL, 0, ExplorerThread, NULL, 0, &m_dwThreadID);
+    Sleep(1000);
     return S_OK;
 }
 
 
-DWORD WINAPI ExplorerThread(LPVOID)
+//
+// IService::Recycle
+//
+HRESULT ExplorerService::Recycle()
+{
+    return S_OK;
+}
+
+
+//
+// ExplorerThread
+//
+DWORD WINAPI ExplorerService::ExplorerThread(LPVOID)
 {
     typedef void *(WINAPI *SHCREATEDESKTOP)(void *);
     typedef bool (WINAPI *SHDESKTOPMESSAGELOOP)(void *);
 
-    TShellDesktopTray *pExplorerTray = NULL;
-    IShellDesktopTray *pTray = NULL;
-    SHCREATEDESKTOP fnSHCreateDesktop = NULL;
-    SHDESKTOPMESSAGELOOP fnSHDesktopMessageLoop = NULL;
-    HANDLE hDesktop = NULL;
+    TShellDesktopTray *pExplorerTray = nullptr;
+    IShellDesktopTray *pTray = nullptr;
+    SHCREATEDESKTOP fnSHCreateDesktop = nullptr;
+    SHDESKTOPMESSAGELOOP fnSHDesktopMessageLoop = nullptr;
+    HANDLE hDesktop = nullptr;
     DWORD dwReturn = 0;
 
     fnSHCreateDesktop = (SHCREATEDESKTOP)GetProcAddress(
@@ -91,9 +117,8 @@ DWORD WINAPI ExplorerThread(LPVOID)
         pExplorerTray->QueryInterface(IID_IShellDesktopTray,
             reinterpret_cast<LPVOID*>(&pTray));
 
-        if ((hDesktop = fnSHCreateDesktop(pTray)) != NULL)
+        if ((hDesktop = fnSHCreateDesktop(pTray)) != nullptr)
         {
-            ShowWindow(FindWindow(_T("Progman"), NULL), SW_HIDE);
             fnSHDesktopMessageLoop(hDesktop);
         }
         else

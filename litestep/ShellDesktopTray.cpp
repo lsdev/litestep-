@@ -21,11 +21,12 @@
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 #include "../utility/common.h"
 #include "ShellDesktopTray.h"
+#include "../lsapi/lsapi.h"
 
 
 TShellDesktopTray::TShellDesktopTray() :
     m_uRefCount(0),
-    m_hDesktopWnd(NULL)
+    m_hDesktopWnd(nullptr)
 {
 }
 
@@ -37,7 +38,7 @@ TShellDesktopTray::~TShellDesktopTray()
 
 HRESULT TShellDesktopTray::QueryInterface(REFIID riid, LPVOID *ppvObj)
 {
-    if (!ppvObj)
+    if (ppvObj == nullptr)
     {
         return E_POINTER;
     }
@@ -48,7 +49,7 @@ HRESULT TShellDesktopTray::QueryInterface(REFIID riid, LPVOID *ppvObj)
     }
     else
     {
-        *ppvObj = NULL;
+        *ppvObj = nullptr;
         return E_NOINTERFACE;
     }
 
@@ -84,8 +85,7 @@ ULONG TShellDesktopTray::GetState()
 
 HRESULT TShellDesktopTray::GetTrayWindow(HWND *hTrayWnd)
 {
-    // Prevent Explorer from closing the tray window when shutting down
-    *hTrayWnd = NULL;
+    *hTrayWnd = GetLitestepWnd();
     return S_OK;
 }
 
@@ -93,6 +93,10 @@ HRESULT TShellDesktopTray::GetTrayWindow(HWND *hTrayWnd)
 HRESULT TShellDesktopTray::RegisterDesktopWindow(HWND hDesktopWindow)
 {
     m_hDesktopWnd = hDesktopWindow;
+
+    // This is called with Progman.
+    ShowWindow(m_hDesktopWnd, SW_HIDE);
+
     return S_OK;
 }
 

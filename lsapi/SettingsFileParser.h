@@ -24,6 +24,9 @@
 
 #include "settingsdefines.h"
 #include "lsapidefines.h"
+#include <stack>
+#include <list>
+#include <strsafe.h>
 
 
 /**
@@ -43,7 +46,37 @@ public:
      * Destructor.
      */
     ~FileParser();
-    
+
+private:
+    /** Item used to check for recursive includes. */
+    struct TrailItem {
+        TrailItem(UINT uLine, LPCTSTR ptzPath) {
+            this->uLine = uLine;
+            this->ptzPath = ptzPath;
+        }
+        bool operator==(const TrailItem & item) {
+            return _tcsicmp(item.ptzPath, this->ptzPath) == 0;
+        }
+        UINT uLine;
+        LPCTSTR ptzPath;
+    };
+
+private:
+    /**
+     * Constructor.
+     *
+     * @param  pSettingsMap  SettingsMap to receive settings from files
+     */
+    FileParser(SettingsMap* pSettingsMap, std::list<TrailItem> &trail);
+
+private:
+    /**
+     * Not implemented.
+     */
+    FileParser(const FileParser &);
+    FileParser& operator=(const FileParser&);
+
+public:
     /**
      * Parses a configuration file. Settings read from the file are added to
      * the SettingsMap object passed in to the FileParser constructor.
@@ -55,6 +88,12 @@ public:
 private:
     /** Settings map to receive settings read from file */
     SettingsMap* m_pSettingsMap;
+
+    /** Reference to the current trail of included files */
+    std::list<TrailItem> &m_trail;
+
+    /** Where the trail is actually stored, in the top-level parser */
+    std::list<TrailItem> m_baseTrail;
     
     /** Handle to current file */
     FILE* m_phFile;
@@ -64,6 +103,25 @@ private:
     
     /** Full path to configuration file */
     TCHAR m_tzFullPath[MAX_PATH_LENGTH];
+    
+    /** Contains an RC key */
+    struct TCStack {
+        TCStack(LPCTSTR ptzString) {
+            StringCchCopy(this->tzString, _countof(this->tzString), ptzString);
+        }
+        TCHAR tzString[MAX_RCCOMMAND];
+    };
+
+    /** Stack of prefixes. */
+    std::stack<TCStack> m_stPrefixes;
+
+    /** The next line to be parsed by _ReadLineFromFile */
+    TCHAR m_tzReadAhead[MAX_LINE_LENGTH];
+
+    /**
+     * Reads the next line from the current file.
+     */
+    bool _ReadNextLine(LPTSTR ptzBuffer);
     
     /**
      * Reads the next line from current file. The line is split into a setting

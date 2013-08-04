@@ -280,7 +280,8 @@ Contents:
  key combination: CTRL+ALT+F1 that is, press and hold the CTRL key and the ALT
  key then depress the F1 key and release all three.  A popup menu will appear at
  your mouse cursor location.  This menu can be used recover from a broken
- configuration.
+ configuration. Note that launching Explorer might not always work if there is
+ already an Explorer file manager window open.
 
  A) LiteStep Structure
  ---------------------
@@ -368,7 +369,7 @@ Contents:
     way use the reserved characters of the step.rc parsers except in the special
     case of * character.  The following characters are reserved:
 
-    ! $ & * ( ) - + = [ ] ; " ' < > , /
+    ! $ & * ( ) - + = [ ] ; " ' < > , / { }
 
     Furthermore it is recommended that you do not use @, #, or | (vertical bar),
     because these characters may become reserved in the future.
@@ -384,7 +385,7 @@ Contents:
 
   1. Step.rc File Parser
 
-    - The step.rc File Parser uses these reserved characters: ;[]"'
+    - The step.rc File Parser uses these reserved characters: ;[]"'{}
 
       ;  Used at the beginning of a textual line to delineate a comment.
          Comments are lines that are ignored by the Directive Parser.  A comment
@@ -403,7 +404,28 @@ Contents:
       ElseIf
       Else
       Endif
-
+      
+    - Surrounding Statements within curly braces as shown below like will cause
+      any command within the braces to have the specified prefix prefixed to it.
+      Within prefix braces, the key - is evaluated to just the prefix.
+      Keys starting with a * are treated specially, and the begining * is put at
+      the begining of the final key name.
+      
+      This:
+      
+      Prefix
+      {
+        - Value
+        Key Value
+        *Event Value
+      }
+    
+      Is equivalent to this:
+      
+      Prefix Value
+      PrefixKey Value
+      *PrefixEvent Value
+    
   2. Step.rc Directive Parser
 
     - The step.rc Directive Parser uses these reserved characters: *$[]"'
@@ -781,19 +803,13 @@ Contents:
 
    Usage:
     LSAutoHideModules TRUE
-    
-  LSCloseExplorer <boolean>
-  --------------------------
-   If explorer is running as shell when LiteStep launches, LiteStep will attempt
-   to close it.
-
-   Usage:
-    LSCloseExplorer TRUE
 
   LSNoShellWarning <boolean>
   --------------------------
    Disables the warning issued when loading LiteStep if another shell is already
    running.  Do not use this setting unless you know what you are doing!
+
+   Note: LiteStep must be restarted for this setting to take affect.
 
    Usage:
     LSNoShellWarning TRUE
@@ -925,9 +941,12 @@ Contents:
    Win2000
    Win2003
    Win2008
+   Win2008R2
    Win2012
+   Win2012R2
    Win7
    Win8
+   Win81
    Win95
    Win98
    WinME
@@ -1344,7 +1363,7 @@ ENDIF
  A) Documentation License Notice
  -------------------------------
 
- Copyright (c) 2005-2012 LiteStep Development Team
+ Copyright (c) 2005-2013 LiteStep Development Team
 
  Permission is granted to copy, distribute and/or modify this document under the
  terms of the GNU Free Documentation License, Version 1.2 or any later version
@@ -1358,7 +1377,7 @@ ENDIF
  LiteStep is a replacement shell for the standard Windows® Explorer shell.
 
  Copyright (C) 1997-1998  Francis Gastellu
- Copyright (C) 1998-2012  LiteStep Development Team
+ Copyright (C) 1998-2013  LiteStep Development Team
 
  This program is free software; you can redistribute it and/or modify it under
  the terms of the GNU General Public License as published by the Free Software

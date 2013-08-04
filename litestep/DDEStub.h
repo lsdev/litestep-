@@ -30,8 +30,9 @@ public:
     DDEStub();
     ~DDEStub();
     
-    HRESULT Start();
-    HRESULT Stop();
+    HRESULT Start() override;
+    HRESULT Stop() override;
+    HRESULT Recycle() override;
     
 private:
     typedef void (WINAPI* ShellDDEFunc)(BOOL);

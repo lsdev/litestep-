@@ -116,6 +116,9 @@ HRESULT TrayService::Start()
             // tell apps to reregister their icons
             SendNotifyMessage(HWND_BROADCAST,
                 RegisterWindowMessage(_T("TaskbarCreated")), 0, 0);
+
+            // tell ITaskbarList which window to communicate with
+            m_taskbarListHandler.Start(m_hTrayWnd);
             
             if (IsVistaOrAbove())
             {
@@ -144,6 +147,7 @@ HRESULT TrayService::Stop()
     HRESULT hr = S_OK;
     
     unloadShellServiceObjects();
+    m_taskbarListHandler.Stop();
     destroyWindows();
     
     while (!m_siVector.empty())
@@ -167,6 +171,16 @@ HRESULT TrayService::Stop()
     m_hInstance = NULL;
     
     return hr;
+}
+
+
+//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+//
+// Recycle()
+//
+HRESULT TrayService::Recycle()
+{
+    return S_OK;
 }
 
 
@@ -282,10 +296,10 @@ void TrayService::destroyWindows()
 HRESULT TrayService::loadShellServiceObject(REFCLSID rclsid)
 {
 #if defined(TRACE_ENABLED)
-    CHAR szBuffer[MAX_PATH] = { 0 };
+    WCHAR szBuffer[MAX_PATH] = { 0 };
     CLSIDToString(rclsid, szBuffer, COUNTOF(szBuffer));
     
-    TRACE("loadShellServiceObject(\"%s\")", szBuffer);
+    TRACE("loadShellServiceObject(\"%ls\")", szBuffer);
 #endif
     
     // The SSO might have a custom manifest.
@@ -544,7 +558,7 @@ LRESULT CALLBACK TrayService::WindowTrayProc(HWND hWnd, UINT uMsg,
             
         case WM_SETTINGCHANGE:
             {
-                TRACE("WM_SETTINGCHANGE(%.4X, \"%s\")",
+                TRACE("WM_SETTINGCHANGE(%.4X, \"%ls\")",
                     wParam, (LPCTSTR)lParam);
                 
                 if (SPI_SETWORKAREA == wParam)
@@ -624,20 +638,20 @@ LRESULT CALLBACK TrayService::WindowNotifyProc(HWND hWnd, UINT uMsg, WPARAM wPar
 HRESULT TrayService::HandleLoadInProc(REFCLSID clsid, DWORD dwMessage)
 {
 #if defined(TRACE_ENABLED)
-    CHAR szBuffer[MAX_PATH] = { 0 };
+    WCHAR szBuffer[MAX_PATH] = { 0 };
     CLSIDToString(clsid, szBuffer, COUNTOF(szBuffer));
     
     if (dwMessage == 1)
     {
-        TRACE("SHLoadInProc(\"%s\")", szBuffer);
+        TRACE("SHLoadInProc(\"%ls\")", szBuffer);
     }
     else if (dwMessage == 2)
     {
-        TRACE("SHEnableServiceObject(\"%s\", FALSE)", szBuffer);
+        TRACE("SHEnableServiceObject(\"%ls\", FALSE)", szBuffer);
     }
     else if (dwMessage == 3)
     {
-        TRACE("SHEnableServiceObject(\"%s\", TRUE)", szBuffer);
+        TRACE("SHEnableServiceObject(\"%ls\", TRUE)", szBuffer);
     }
     else
     {
@@ -1887,8 +1901,10 @@ BOOL TrayService::HandleNotification(PSHELLTRAYDATA pstd)
 //
 bool TrayService::notify(DWORD dwMessage, PCLSNOTIFYICONDATA pclsnid) const
 {
-    return 0 != SendMessage(m_hLiteStep, LM_SYSTRAY,
-        dwMessage, (LPARAM)pclsnid);
+    LSNOTIFYICONDATAA lsnidA(pclsnid);
+    return 0 != (SendMessage(m_hLiteStep, LM_SYSTRAYW,
+        dwMessage, (LPARAM)pclsnid) | SendMessage(m_hLiteStep, LM_SYSTRAYA,
+        dwMessage, (LPARAM)&lsnidA));
 }
 
 
@@ -1972,25 +1988,16 @@ bool TrayService::extendNIDCopy(LSNOTIFYICONDATA& lsnid, const NID_XX& nid) cons
             {
                 NID_5W* pnid = (NID_5W*)&nid;
                 
-                int nReturn;
-                WCHAR szTemp[256];
-                
-                memcpy(szTemp, pnid->szInfo, sizeof(WCHAR)*256);
-                szTemp[255] = 0;
-                nReturn = WideCharToMultiByte(CP_ACP, 0, szTemp, -1,
-                    lsnid.szInfo, TRAY_MAX_INFO_LENGTH, NULL, NULL);
-                
-                if (!nReturn)
+                HRESULT hr;
+
+                hr = StringCchCopy(lsnid.szInfo, _countof(lsnid.szInfo), pnid->szInfo);
+                if (FAILED(hr))
                 {
                     lsnid.szInfo[0] = 0;
                 }
                 
-                memcpy(szTemp, pnid->szInfoTitle, sizeof(WCHAR)*64);
-                szTemp[63] = 0;
-                nReturn = WideCharToMultiByte(CP_ACP, 0, szTemp, -1,
-                    lsnid.szInfoTitle, TRAY_MAX_INFOTITLE_LENGTH, NULL, NULL);
-                
-                if (!nReturn)
+                hr = StringCchCopy(lsnid.szInfoTitle, _countof(lsnid.szInfoTitle), pnid->szInfoTitle);
+                if (FAILED(hr))
                 {
                     lsnid.szInfoTitle[0] = 0;
                 }
@@ -2005,20 +2012,18 @@ bool TrayService::extendNIDCopy(LSNOTIFYICONDATA& lsnid, const NID_XX& nid) cons
             {
                 NID_5A* pnid = (NID_5A*)&nid;
                 
-                HRESULT hr;
+                int nResult = MultiByteToWideChar(CP_ACP, 0, pnid->szInfo,
+                    sizeof(pnid->szInfo), lsnid.szInfo, _countof(lsnid.szInfo));
                 
-                hr = StringCchCopy(lsnid.szInfo,
-                    TRAY_MAX_INFO_LENGTH, pnid->szInfo);
-                
-                if (FAILED(hr))
+                if (nResult == 0)
                 {
                     lsnid.szInfo[0] = 0;
                 }
                 
-                hr = StringCchCopy(lsnid.szInfoTitle,
-                    TRAY_MAX_INFOTITLE_LENGTH, pnid->szInfoTitle);
+                nResult = MultiByteToWideChar(CP_ACP, 0, pnid->szInfoTitle,
+                    sizeof(pnid->szInfoTitle), lsnid.szInfoTitle, _countof(lsnid.szInfoTitle));
                 
-                if (FAILED(hr))
+                if (nResult == 0)
                 {
                     lsnid.szInfoTitle[0] = 0;
                 }

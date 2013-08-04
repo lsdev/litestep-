@@ -7,7 +7,7 @@
 //
 // Generated from the TEXTINCLUDE 2 resource.
 //
-#include "windows.h"
+#include "afxres.h"
 
 /////////////////////////////////////////////////////////////////////////////
 #undef APSTUDIO_READONLY_SYMBOLS
@@ -52,7 +52,7 @@ BEGIN
             VALUE "OriginalFilename", "lsapi.dll"
             VALUE "ProductName", "LiteStep"
             VALUE "ProductVersion", "0.25.0 Alpha"
-            VALUE "SpecialBuild", "alur's windows 8/x64 branch"
+            VALUE "SpecialBuild", "CVS HEAD Test Release"
         END
     END
     BLOCK "VarFileInfo"
@@ -75,7 +75,7 @@ END
 
 2 TEXTINCLUDE 
 BEGIN
-    "#include ""windows.h""\r\n"
+    "#include ""afxres.h""\r\n"
     "\0"
 END
 

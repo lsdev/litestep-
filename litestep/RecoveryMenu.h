@@ -45,8 +45,9 @@ public:
     //
     // IService methods
     //
-    HRESULT Start();
-    HRESULT Stop();
+    HRESULT Start() override;
+    HRESULT Stop() override;
+    HRESULT Recycle() override;
     
 private:
     static DWORD WINAPI ThreadThunk(LPVOID pParam);

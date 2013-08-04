@@ -37,6 +37,8 @@
 #define ID_TERMINATE 3
 #define ID_RUN 4
 #define ID_SHUTDOWN 5
+#define ID_EXPLORER 6
+#define ID_ABOUT 7
 
 const TCHAR szRecoveryMenuWndClass[] = _T("RecoveryMenuWndClass");
 
@@ -49,17 +51,19 @@ struct MenuCommands
 {
     int nStringID;
     int nCommandID;
-    LPCSTR pszDefText;
+    LPCTSTR pszDefText;
 }
 rgMenuCommands[] = \
 {
-     { IDS_LITESTEP_RECYCLELS,   ID_RECYCLE,   "Re&cycle LiteStep"            }
-    ,{ IDS_LITESTEP_QUITLS,      ID_QUIT,      "&Quit LiteStep"               }
-    ,{ IDS_LITESTEP_TERMINATELS, ID_TERMINATE, "Forcibly &Terminate LiteStep" }
-    ,{ 0,                        -1,           ""                             }
-    ,{ IDS_LITESTEP_RUN,         ID_RUN,       "&Run..."                      }
-    ,{ 0,                        -1,           ""                             }
-    ,{ IDS_LITESTEP_SHUTDOWNWIN, ID_SHUTDOWN,  "Sh&utdown Windows..."         }
+     { IDS_LITESTEP_RECYCLELS,   ID_RECYCLE,   _T("Re&cycle LiteStep")            }
+    ,{ IDS_LITESTEP_QUITLS,      ID_QUIT,      _T("&Quit LiteStep")               }
+    ,{ IDS_LITESTEP_TERMINATELS, ID_TERMINATE, _T("Forcibly &Terminate LiteStep") }
+    ,{ IDS_LITESTEP_ABOUTLS,     ID_ABOUT,     _T("&About LiteStep")              }
+    ,{ 0,                        -1,           _T("")                             }
+    ,{ IDS_LITESTEP_RUN,         ID_RUN,       _T("&Run...")                      }
+    ,{ IDS_LITESTEP_EXPLORER,    ID_EXPLORER,  _T("&Start Explorer as shell")     }
+    ,{ 0,                        -1,           _T("")                             }
+    ,{ IDS_LITESTEP_SHUTDOWNWIN, ID_SHUTDOWN,  _T("Sh&utdown Windows...")         }
 };
 
 
@@ -137,6 +141,16 @@ HRESULT RecoveryMenu::Stop()
     }
     
     return hr;
+}
+
+
+//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+//
+// Recycle
+//
+HRESULT RecoveryMenu::Recycle()
+{
+    return S_OK;
 }
 
 
@@ -290,8 +304,8 @@ int RecoveryMenu::ShowMenu(HWND hWnd) const
     {
         if (rgMenuCommands[i].nStringID)
         {
-            char szBuffer[MAX_PATH] = { 0 };
-            GetResStr(m_hInstance,
+            TCHAR szBuffer[MAX_PATH] = { 0 };
+            GetResStrW(m_hInstance,
                 rgMenuCommands[i].nStringID, szBuffer, MAX_PATH,
                 rgMenuCommands[i].pszDefText);
             
@@ -342,6 +356,18 @@ void RecoveryMenu::HandleMenuCommand(int nCommand) const
         {
             // ditto
             PostMessage(GetLitestepWnd(), LM_RECYCLE, LR_QUIT, 0);
+        }
+        break;
+
+    case ID_ABOUT:
+        {
+            LSExecuteW(nullptr, L"!about", SW_SHOW);
+        }
+        break;
+
+    case ID_EXPLORER:
+        {
+            PostMessage(GetLitestepWnd(), LM_RECYCLE, LR_EXPLORER, 0);
         }
         break;
         

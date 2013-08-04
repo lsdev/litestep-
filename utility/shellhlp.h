@@ -38,12 +38,16 @@ bool GetShellFolderPath(int nFolder, LPTSTR ptzPath, size_t cchPath);
 
 bool GetSystemString(DWORD dwCode, LPTSTR ptzBuffer, DWORD cchBuffer);
 HRESULT PathAddBackslashEx(LPTSTR ptzPath, size_t cchPath);
+HRESULT PathAddBackslashExA(LPSTR pszPath, size_t cchPath);
 HRESULT CLSIDToString(REFCLSID rclsid, LPTSTR ptzBuffer, size_t cchBuffer);
 bool LSGetModuleFileName(HINSTANCE hInst, LPTSTR pszBuffer, DWORD cchBuffer);
+DWORD LSGetModuleFileNameEx(HANDLE hProcess, HMODULE hModule,
+    LPTSTR pszBuffer, DWORD cchBuffer);
+DWORD LSGetProcessImageFileName(HANDLE hProcess, LPTSTR pszBuffer, DWORD cchBuffer);
 HRESULT TryAllowSetForegroundWindow(HWND hWnd);
 bool IsVistaOrAbove();
 void LSShutdownDialog(HWND hWnd);
-BOOL LSPlaySystemSound(LPCTSTR pszSoundAlias);
+BOOL LSPlaySystemSound(LPCWSTR pwzSoundAlias);
 HANDLE LSCreateThread(LPCSTR pszName, LPTHREAD_START_ROUTINE fnStartAddres,
                       LPVOID lpParameter, LPDWORD pdwThreadId);
 
@@ -55,9 +59,9 @@ HANDLE LSCreateThread(LPCSTR pszName, LPTHREAD_START_ROUTINE fnStartAddres,
 BOOL LSDisableWow64FsRedirection(PVOID* ppvOldValue);
 BOOL LSRevertWow64FsRedirection(PVOID pvOldValue);
 
-BOOL LSShellExecuteEx(LPSHELLEXECUTEINFO lpExecInfo);
-HINSTANCE LSShellExecute(HWND hwnd, LPCTSTR lpOperation, LPCTSTR lpFile,
-                         LPCTSTR lpParameters, LPCTSTR lpDirectory, INT nShow);
+BOOL LSShellExecuteEx(LPSHELLEXECUTEINFOW lpExecInfo);
+HINSTANCE LSShellExecute(HWND hwnd, LPCWSTR lpOperation, LPCWSTR lpFile,
+                         LPCWSTR lpParameters, LPCWSTR lpDirectory, INT nShow);
 
 
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -71,6 +75,18 @@ void   LSDeactivateActCtx(HANDLE hActCtx, ULONG_PTR* pulCookie);
 
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 //
+// LiteStep Return Values (LRV)
+//
+#define LRV_NO_APP_PATH        -1
+#define LRV_OK                  0 // is also S_OK from WinError
+#define LRV_SHUTDOWN_DLG        1
+#define LRV_NO_STEP             2
+#define LRV_LSAPI_FAIL          3
+#define LRV_EXPLORER_START      4
+
+
+//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+//
 // Windows Versions
 //
 UINT GetWindowsVersion();
@@ -78,23 +94,26 @@ UINT GetWindowsVersion();
 #define WINVER_UNKNOWN  (UINT)-1
 
 // Win9x
-#define WINVER_WIN95    1
-#define WINVER_WIN98    2
-#define WINVER_WINME    3
+#define WINVER_WIN95        1
+#define WINVER_WIN98        2
+#define WINVER_WINME        3
 
 // Windows NT Workstation
-#define WINVER_WINNT4   4
-#define WINVER_WIN2000  5
-#define WINVER_WINXP    6
-#define WINVER_VISTA    7
-#define WINVER_WIN7     8
-#define WINVER_WIN8     9
+#define WINVER_WINNT4       4
+#define WINVER_WIN2000      5
+#define WINVER_WINXP        6
+#define WINVER_VISTA        7
+#define WINVER_WIN7         8
+#define WINVER_WIN8         9
+#define WINVER_WIN81        10
 
 // Windows NT Server
-#define WINVER_WIN2003 10
-#define WINVER_WHS     11
-#define WINVER_WIN2008 12
-#define WINVER_WIN2012 13
+#define WINVER_WIN2003      11
+#define WINVER_WHS          12
+#define WINVER_WIN2008      13
+#define WINVER_WIN2008R2    14
+#define WINVER_WIN2012      15
+#define WINVER_WIN2012R2    16
 
 
 //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -106,5 +125,7 @@ inline HRESULT HrGetLastError()
 {
     return HRESULT_FROM_WIN32(GetLastError());
 }
+
+HRESULT DescriptionFromHR(HRESULT hr, LPWSTR buf, size_t cchBuf);
 
 #endif // SHELLHLP_H
