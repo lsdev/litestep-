@@ -28,6 +28,7 @@
 #include "TrayService.h"
 #include "ExplorerService.h"
 #include "FullscreenMonitor.h"
+#include "COMService.h"
 
 // Managers
 #include "MessageManager.h"
@@ -1272,6 +1273,20 @@ HRESULT CLiteStep::_InitServices(bool bSetAsShell)
     }
 
     //
+    // COM Service
+    //
+    pService = new (std::nothrow) COMService();
+
+    if (pService)
+    {
+        m_Services.push_back(pService);
+    }
+    else
+    {
+        return E_OUTOFMEMORY;
+    }
+
+    //
     // FullscreenMonitor service
     //
     m_pFullscreenMonitor = new (std::nothrow) FullscreenMonitor();
@@ -1449,8 +1464,10 @@ HRESULT CLiteStep::_EnumRevIDs(LSENUMREVIDSPROCW pfnCallback, LPARAM lParam) con
     
     MessageManager::windowSetT setWindowsW, setWindowsA;
     
-    if (m_pMessageManager->GetWindowsForMessage(LM_GETREVIDA, setWindowsA) ||
-        m_pMessageManager->GetWindowsForMessage(LM_GETREVIDW, setWindowsW))
+    m_pMessageManager->GetWindowsForMessage(LM_GETREVIDA, setWindowsA);
+    m_pMessageManager->GetWindowsForMessage(LM_GETREVIDW, setWindowsW);
+    
+    if (!setWindowsA.empty() || !setWindowsW.empty())
     {
         hr = S_OK;
         

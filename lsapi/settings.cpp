@@ -97,7 +97,7 @@ BOOL LCReadNextCommandA(LPVOID pFile, LPSTR pszValue, size_t cchValue)
             std::unique_ptr<wchar_t> temp(new wchar_t[cchValue]);
             bReturn = g_LSAPIManager.GetSettingsManager()->LCReadNextCommand(
                 pFile, temp.get(), cchValue);
-            WideCharToMultiByte(CP_ACP, 0, temp.get(), (int)cchValue, pszValue, (int)cchValue, "?", nullptr);
+            WideCharToMultiByte(CP_ACP, 0, temp.get(), -1, pszValue, (int)cchValue, "?", nullptr);
         }
     }
     
@@ -135,7 +135,7 @@ BOOL LCReadNextConfigA(LPVOID pFile, LPCSTR pszConfig, LPSTR pszValue, size_t cc
             std::unique_ptr<wchar_t> temp(new wchar_t[cchValue]);
             bReturn = g_LSAPIManager.GetSettingsManager()->LCReadNextConfig(
                 pFile, MBSTOWCS(pszConfig), temp.get(), cchValue);
-            WideCharToMultiByte(CP_ACP, 0, temp.get(), (int)cchValue, pszValue, (int)cchValue, "?", nullptr);
+            WideCharToMultiByte(CP_ACP, 0, temp.get(), -1, pszValue, (int)cchValue, "?", nullptr);
         }
     }
     
@@ -171,7 +171,7 @@ BOOL LCReadNextLineA(LPVOID pFile, LPSTR pszValue, size_t cchValue)
             std::unique_ptr<wchar_t> value(new wchar_t[cchValue]);
             bReturn = g_LSAPIManager.GetSettingsManager()->LCReadNextLine(
                 pFile, value.get(), cchValue);
-            WideCharToMultiByte(CP_ACP, 0, value.get(), (int)cchValue, pszValue, (int)cchValue, "?", nullptr);
+            WideCharToMultiByte(CP_ACP, 0, value.get(), -1, pszValue, (int)cchValue, "?", nullptr);
         }
     }
     
@@ -311,14 +311,14 @@ BOOL GetRCStringA(LPCSTR pszKeyName, LPSTR pszValue, LPCSTR pszDefStr, int maxLe
         std::unique_ptr<wchar_t> key (WCSFromMBS(pszKeyName));
         std::unique_ptr<wchar_t> def (WCSFromMBS(pszDefStr));
 
-        *tempValue = L'\0';
+        *tempValue = '\0';
 
         BOOL bRet = g_LSAPIManager.GetSettingsManager()->GetRCString(
             key.get(), tempValue.get(), def.get(), maxLen);
 
         if (pszValue)
         {
-            WideCharToMultiByte(CP_ACP, 0, tempValue.get(), maxLen, pszValue, maxLen, "?", nullptr);
+            WideCharToMultiByte(CP_ACP, 0, tempValue.get(), -1, pszValue, maxLen, "?", nullptr);
         }
 
         return bRet;
@@ -374,14 +374,14 @@ BOOL GetRCLineA(LPCSTR pszKeyName, LPSTR pszBuffer, UINT nBufLen, LPCSTR pszDefa
         std::unique_ptr<wchar_t> key (WCSFromMBS(pszKeyName));
         std::unique_ptr<wchar_t> def (WCSFromMBS(pszDefault));
 
-        *tempValue = L'\0';
+        *tempValue = '\0';
 
         BOOL bRet = g_LSAPIManager.GetSettingsManager()->GetRCLine(
             key.get(), tempValue.get(), nBufLen, def.get());
 
         if (pszBuffer)
         {
-            WideCharToMultiByte(CP_ACP, 0, tempValue.get(), nBufLen, pszBuffer, nBufLen, "?", nullptr);
+            WideCharToMultiByte(CP_ACP, 0, tempValue.get(), -1, pszBuffer, nBufLen, "?", nullptr);
         }
 
         return bRet;
@@ -416,7 +416,7 @@ BOOL LSGetVariableExA(LPCSTR pszKeyName, LPSTR pszValue, DWORD dwLength)
         BOOL bRet = g_LSAPIManager.GetSettingsManager()->GetVariable(
             MBSTOWCS(pszKeyName), temp.get(), dwLength);
 
-        WideCharToMultiByte(CP_ACP, 0, temp.get(), dwLength, pszValue, dwLength, "?", nullptr);
+        WideCharToMultiByte(CP_ACP, 0, temp.get(), -1, pszValue, dwLength, "?", nullptr);
 
         return bRet;
     }
@@ -457,7 +457,7 @@ BOOL LSGetVariableA(LPCSTR pszKeyName, LPSTR pszValue)
     
     if (pszValue)
     {
-        pszValue[0] = L'\0';
+        pszValue[0] = '\0';
     }
     
     if (g_LSAPIManager.IsInitialized())
