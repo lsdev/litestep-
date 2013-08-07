@@ -27,6 +27,32 @@
 
 
 //
+// Wrapper around SHCreateShellItemArrayFromIDLists.
+// Until we drop XP support.
+//
+HRESULT LSCreateShellItemArrayFromIDLists(UINT cidl, PCIDLIST_ABSOLUTE_ARRAY rgpidl,
+                                          IShellItemArray **ppsiItemArray)
+{
+    typedef HRESULT (WINAPI* PROCTYPE)(UINT cidl, PCIDLIST_ABSOLUTE_ARRAY rgpidl,
+                                          IShellItemArray **ppsiItemArray);
+    static PROCTYPE proc = nullptr;
+    
+    if (proc == nullptr)
+    {
+        proc = (PROCTYPE)GetProcAddress(GetModuleHandle(_T("Shell32.dll")),
+            "SHCreateShellItemArrayFromIDLists");
+    }
+
+    if (proc == nullptr)
+    {
+        return E_FAIL;
+    }
+
+    return proc(cidl, rgpidl, ppsiItemArray);
+}
+
+
+//
 // DesktopWallpaper
 //
 DesktopWallpaper::DesktopWallpaper()
@@ -448,7 +474,7 @@ HRESULT DesktopWallpaper::GetSlideshow(IShellItemArray** ppItems)
         
     if (SUCCEEDED(hr))
     {
-        hr = SHCreateShellItemArrayFromIDLists(1, (LPCITEMIDLIST*)&idList, ppItems);
+        hr = LSCreateShellItemArrayFromIDLists(1, (LPCITEMIDLIST*)&idList, ppItems);
     }
     
     if (idList)

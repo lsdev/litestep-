@@ -409,12 +409,19 @@ Contents:
       any command within the braces to have the specified prefix prefixed to it.
       Within prefix braces, the key - is evaluated to just the prefix.
       Keys starting with a * are treated specially, and the begining * is put at
-      the begining of the final key name.
+      the begining of the final key name. Inside the curly braces, @ is treated
+      as a special character in values, and is replaced by the prefix. Several
+      @'s in a row walks up the prefix stack.
       
-      This:
+      Using an example, this:
       
       Prefix
       {
+        Prefix2
+        {
+          SomeKey @@
+          SomeOtherKey @
+        }
         - Value
         Key Value
         *Event Value
@@ -422,6 +429,8 @@ Contents:
     
       Is equivalent to this:
       
+      PrefixPrefix2SomeKey Prefix
+      PrefixPrefix2SomeOtherKey PrefixPrefix2
       Prefix Value
       PrefixKey Value
       *PrefixEvent Value
@@ -640,6 +649,26 @@ Contents:
         1 and false maps to 0.  A string is parsed as a numeric literal; if
         parsing fails, the string is mapped to NaN.
 
+      pathDirPart(string)
+        Returns the directory part of the string. For example,
+        pathDirPart('c:\\test\\somefile.txt') will return c:\test\
+
+      pathDrivePart(string)
+        Returns the drive part of the string. For example,
+        pathDrivePart('c:\\test\\somefile.txt') will return c:\
+        
+      pathExtPart(string)
+        Returns the extension part of the string. For example,
+        pathExtPart('c:\\test\\somefile.txt') will return 
+        
+      pathFilePart(string)
+        Returns the file part of the string. For example,
+        pathFilePart('c:\\test\\somefile.txt') will return somefile.txt
+        
+      pathFileNamePart(string)
+        Returns the file name part of the string. For example,
+        pathFileNamePart('c:\\test\\somefile.txt') will return somefile
+        
       pow(number, number)
         Returns the first argument, converted to a number, raised to the power
         of the second argument, converted to a number.
@@ -933,7 +962,7 @@ Contents:
    WinDir
 
   2. Conditional Expansions
-
+  
    Win64
    Win9X
    WinNT
@@ -973,6 +1002,12 @@ Contents:
    NetworkAndDialup
    Printers
    Scheduled
+   
+   5. Character Literal Expansions
+   Dollar - Evaluates to $
+   At - Evaluates to @
+   NL - Evaluates to a newline character
+   CR - Evaluate to a carriage return character
 
  F) !Bang Commands
  -----------------

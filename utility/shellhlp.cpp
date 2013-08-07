@@ -375,7 +375,6 @@ BOOL LSGUIDFromString(LPCTSTR guidString, LPGUID guid)
 }
 
 
-
 //
 // LSGetModuleFileName
 //
