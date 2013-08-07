@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="DataStore.cpp" />
+    <ClCompile Include="DDEWorker.cpp" />
+    <ClCompile Include="litestep.cpp" />
+    <ClCompile Include="MessageManager.cpp" />
+    <ClCompile Include="Module.cpp" />
+    <ClCompile Include="ModuleManager.cpp" />
+    <ClCompile Include="StartupRunner.cpp" />
+    <ClCompile Include="TrayNotifyIcon.cpp" />
+    <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="DDEService.cpp">
+      <Filter>Services</Filter>
+    </ClCompile>
+    <ClCompile Include="DDEStub.cpp">
+      <Filter>Services</Filter>
+    </ClCompile>
+    <ClCompile Include="FullscreenMonitor.cpp">
+      <Filter>Services</Filter>
+    </ClCompile>
+    <ClCompile Include="RecoveryMenu.cpp">
+      <Filter>Services</Filter>
+    </ClCompile>
+    <ClCompile Include="TrayService.cpp">
+      <Filter>Services</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplorerService.cpp">
+      <Filter>Services</Filter>
+    </ClCompile>
+    <ClCompile Include="ShellDesktopTray.cpp" />
+    <ClCompile Include="TaskbarListHandler.cpp">
+      <Filter>Services</Filter>
+    </ClCompile>
+    <ClCompile Include="COMService.cpp">
+      <Filter>Services</Filter>
+    </ClCompile>
+    <ClCompile Include="COMFactory.cpp">
+      <Filter>COMServiceObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="DesktopWallpaper.cpp">
+      <Filter>COMServiceObjects</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="buildoptions.h" />
+    <ClInclude Include="DataStore.h" />
+    <ClInclude Include="DDEWorker.h" />
+    <ClInclude Include="litestep.h" />
+    <ClInclude Include="MessageManager.h" />
+    <ClInclude Include="Module.h" />
+    <ClInclude Include="ModuleManager.h" />
+    <ClInclude Include="StartupRunner.h" />
+    <ClInclude Include="TrayAppBar.h" />
+    <ClInclude Include="TrayNotifyIcon.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="DDEStub.h">
+      <Filter>Services</Filter>
+    </ClInclude>
+    <ClInclude Include="DDEService.h">
+      <Filter>Services</Filter>
+    </ClInclude>
+    <ClInclude Include="FullscreenMonitor.h">
+      <Filter>Services</Filter>
+    </ClInclude>
+    <ClInclude Include="RecoveryMenu.h">
+      <Filter>Services</Filter>
+    </ClInclude>
+    <ClInclude Include="TrayService.h">
+      <Filter>Services</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplorerService.h">
+      <Filter>Services</Filter>
+    </ClInclude>
+    <ClInclude Include="ShellDesktopTray.h" />
+    <ClInclude Include="TaskbarListHandler.h">
+      <Filter>Services</Filter>
+    </ClInclude>
+    <ClInclude Include="COMService.h">
+      <Filter>Services</Filter>
+    </ClInclude>
+    <ClInclude Include="IDesktopWallpaper.h">
+      <Filter>COMServiceObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="DesktopWallpaper.h">
+      <Filter>COMServiceObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="COMFactory.h">
+      <Filter>COMServiceObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="IDesktopWallpaperPrivate.h">
+      <Filter>COMServiceObjects</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="litestep.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="litestep.bmp" />
+    <None Include="litestep.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Services">
+      <UniqueIdentifier>{2cbbf3c2-b15e-4920-ba91-b93559d1958f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="COMServiceObjects">
+      <UniqueIdentifier>{a8ad4190-dfef-43c4-9d03-705df38c7a43}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

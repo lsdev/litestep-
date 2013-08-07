@@ -3,7 +3,7 @@
 // This is a part of the Litestep Shell source code.
 //
 // Copyright (C) 1998 (e)
-// Copyright (C) 1997-2011  LiteStep Development Team
+// Copyright (C) 1997-2013  LiteStep Development Team
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -32,8 +32,9 @@ public:
     DDEService();
     ~DDEService();
     
-    HRESULT Start();
-    HRESULT Stop();
+    HRESULT Start() override;
+    HRESULT Stop() override;
+    HRESULT Recycle() override;
     
     static HDDEDATA CALLBACK DdeCallback(
         UINT wType, UINT wFmt, HCONV hConv, HSZ hszTopic,

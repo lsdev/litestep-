@@ -2,7 +2,7 @@
 //
 // This is a part of the Litestep Shell source code.
 //
-// Copyright (C) 1997-2011  LiteStep Development Team
+// Copyright (C) 1997-2013  LiteStep Development Team
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -43,7 +43,7 @@ public:
     /**
      * Constructor.
      */
-    MathParser(const SettingsMap& context, const std::string& expression,
+    MathParser(const SettingsMap& context, const std::wstring& expression,
         const StringSet& recursiveVarSet, unsigned int flags = 0);
     
     /**
@@ -55,12 +55,12 @@ protected:
     /**
      * Calls a function with the specified arguments and returns the result.
      */
-    MathValue CallFunction(const std::string& name, const MathValueList& argList) const;
+    MathValue CallFunction(const std::wstring& name, const MathValueList& argList) const;
     
     /**
      * Returns the value of a variable.
      */
-    MathValue GetVariable(const std::string& name) const;
+    MathValue GetVariable(const std::wstring& name) const;
     
 private:
     /**

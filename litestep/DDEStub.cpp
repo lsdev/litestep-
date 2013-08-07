@@ -2,7 +2,7 @@
 //
 // This is a part of the Litestep Shell source code.
 //
-// Copyright (C) 1997-2011  LiteStep Development Team
+// Copyright (C) 1997-2013  LiteStep Development Team
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -24,15 +24,18 @@
 HMODULE DDEStub::m_hShDocVw = NULL;
 DDEStub::ShellDDEFunc DDEStub::m_pShellDDEInit = NULL;
 
+
 DDEStub::DDEStub()
 {
     // do nothing
 }
 
+
 DDEStub::~DDEStub()
 {
     // do nothing
 }
+
 
 HRESULT DDEStub::Start()
 {
@@ -68,6 +71,7 @@ HRESULT DDEStub::Start()
     return hr;
 }
 
+
 HRESULT DDEStub::Stop()
 {
     if (m_pShellDDEInit)
@@ -80,5 +84,11 @@ HRESULT DDEStub::Stop()
         FreeLibrary(m_hShDocVw);
     }
     
+    return S_OK;
+}
+
+
+HRESULT DDEStub::Recycle()
+{
     return S_OK;
 }

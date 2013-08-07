@@ -2,7 +2,7 @@
 //
 // This is a part of the Litestep Shell source code.
 //
-// Copyright (C) 1997-2011  LiteStep Development Team
+// Copyright (C) 1997-2013  LiteStep Development Team
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -120,6 +120,13 @@ HRESULT DDEService::Stop()
     
     return hr;
 }
+
+
+HRESULT DDEService::Recycle()
+{
+    return S_OK;
+}
+
 
 bool DDEService::_DoStart()
 {

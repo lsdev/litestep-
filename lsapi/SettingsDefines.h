@@ -2,7 +2,7 @@
 //
 // This is a part of the Litestep Shell source code.
 //
-// Copyright (C) 1997-2011  LiteStep Development Team
+// Copyright (C) 1997-2013  LiteStep Development Team
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -27,15 +27,27 @@
 #include <map>
 #include <set>
 
+/** */
+struct SettingValue
+{
+    SettingValue(std::wstring sValue, bool bTerminal)
+    {
+        this->sValue = sValue;
+        this->bTerminal = bTerminal;
+    }
+
+    std::wstring sValue;
+    bool bTerminal;
+};
 
 /** Maps setting names to values */
-typedef std::multimap<std::string, std::string, stringicmp> SettingsMap;
+typedef std::multimap<std::wstring, SettingValue, stringicmp> SettingsMap;
 
 /** Maps setting names to iterators */
-typedef std::map<std::string, SettingsMap::iterator, stringicmp> IteratorMap;
+typedef std::map<std::wstring, SettingsMap::iterator, stringicmp> IteratorMap;
 
 /** Set of strings with case-insensitive ordering. */
-typedef std::set<std::string, stringicmp> StringSet;
+typedef std::set<std::wstring, stringicmp> StringSet;
 
 
 #endif // SETTINGSDEFINES_H_

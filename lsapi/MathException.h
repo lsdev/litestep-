@@ -2,7 +2,7 @@
 //
 // This is a part of the Litestep Shell source code.
 //
-// Copyright (C) 1997-2011  LiteStep Development Team
+// Copyright (C) 1997-2013  LiteStep Development Team
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -36,10 +36,17 @@ public:
     /**
      * Constructs a MathException with the specified message.
      */
-    MathException(const std::string& message) throw() : std::runtime_error(message)
+    MathException(const std::wstring& message) throw() : std::runtime_error(std::string(message.begin(), message.end()))
     {
-        // do nothing
+        this->sMessage = message;
     }
+
+    const std::wstring & GetException() const
+    {
+        return sMessage;
+    }
+
+    std::wstring sMessage;
 };
 
 

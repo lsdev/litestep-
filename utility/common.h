@@ -2,7 +2,7 @@
 //
 // This is a part of the Litestep Shell source code.
 //
-// Copyright (C) 1997-2011  LiteStep Development Team
+// Copyright (C) 1997-2013  LiteStep Development Team
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -29,8 +29,9 @@
 
 #else
 
-#  define _WIN32_WINNT    0x0600
-#  define _WIN32_IE       0x0603
+#  define _WIN32_WINNT    0x0603
+#  define WINVER          0x0603
+#  define _WIN32_IE       0x0A00
 
 #  define WIN32_LEAN_AND_MEAN
 

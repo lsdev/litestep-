@@ -2,7 +2,7 @@
 //
 // This is a part of the Litestep Shell source code.
 //
-// Copyright (C) 1997-2011  LiteStep Development Team
+// Copyright (C) 1997-2013  LiteStep Development Team
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -81,12 +81,12 @@ public:
     /**
      * Loads a module.
      *
-     * @param  pszLocation  path to the module's DLL
+     * @param  pwzLocation  path to the module's DLL
      * @param  dwFlags      set of flags that control how the module is loaded
      * @return <code>TRUE</code> if successful or <code>FALSE</code> if an
      *         error occurs
      */
-    BOOL LoadModule(LPCSTR pszLocation, DWORD dwFlags);
+    BOOL LoadModule(LPCWSTR pwzLocation, DWORD dwFlags);
     
     /**
      * Unloads a module given its instance handle.
@@ -100,11 +100,11 @@ public:
     /**
      * Unloads a module given the path to its DLL.
      *
-     * @param  pszLocation  path to the module's DLL
+     * @param  pwzLocation  path to the module's DLL
      * @return <code>TRUE</code> if successful or <code>FALSE</code> if an
      *         error occurs
      */
-    BOOL QuitModule(LPCSTR pszLocation);
+    BOOL QuitModule(LPCWSTR pwzLocation);
     
     /**
      * Reloads a module given its instance handle
@@ -127,7 +127,21 @@ public:
      *         <code>S_FALSE</code> if the callback function returned
      *         <code>FALSE</code>, or an error code
      */
-    HRESULT EnumModules(LSENUMMODULESPROC pfnCallback, LPARAM lParam) const;
+    HRESULT EnumModules(LSENUMMODULESPROCW pfnCallback, LPARAM lParam) const;
+    
+    /**
+     * Enumerates performance statistics for loaded modules. Calls the callback
+     * function once for each loaded module. Continues until all modules have
+     * been enumerated or the callback function returns <code>FALSE</code>.
+     *
+     * @param  pfnCallback  pointer to callback function
+     * @param  lParam       application-defined value passed to the callback
+     *                      function
+     * @return <code>S_OK</code> if all modules were enumerated,
+     *         <code>S_FALSE</code> if the callback function returned
+     *         <code>FALSE</code>, or an error code
+     */
+    HRESULT EnumPerformance(LSENUMPERFORMANCEPROCW pfnCallback, LPARAM lParam) const;
     
 private:
     /**
@@ -155,7 +169,7 @@ private:
      *
      * @return iterator that points to the module or the end of the list
      */
-    ModuleQueue::iterator _FindModule(LPCSTR pszLocation);
+    ModuleQueue::iterator _FindModule(LPCWSTR pwzLocation);
     
     /**
      * Finds a module in the loaded module list based on its instance handle.
@@ -167,11 +181,11 @@ private:
     /**
      * Allocates a module object.
      *
-     * @param  pszLocation  path to the module's DLL
+     * @param  pwzLocation  path to the module's DLL
      * @param  dwFlags      set of flags that control how the module is loaded
      * @return pointer to the module object
      */
-    Module* _MakeModule(LPCSTR pszLocation, DWORD dwFlags);
+    Module* _MakeModule(LPCWSTR pwzLocation, DWORD dwFlags);
     
     /**
      * Waits for an array of events to all be set while remaining responsive
@@ -192,7 +206,7 @@ private:
     HWND m_hLiteStep;
     
     /** Path to LiteStep's root directory */
-    std::string m_sAppPath;
+    std::wstring m_sAppPath;
     
     /**
      * Predicate used by <code>_FindModule</code> to locate a loaded module
@@ -203,7 +217,7 @@ private:
         /**
          * Constructor.
          */
-        IsLocationEqual(LPCSTR pszLocation) : m_pszLocation(pszLocation)
+        IsLocationEqual(LPCWSTR pwzLocation) : m_pwzLocation(pwzLocation)
         {
             // do nothing
         }
@@ -214,12 +228,12 @@ private:
          */
         bool operator() (const Module* pModule) const
         {
-            return (_stricmp(m_pszLocation, pModule->GetLocation()) == 0);
+            return (_wcsicmp(m_pwzLocation, pModule->GetLocation()) == 0);
         }
         
     private:
         /** Path to match */
-        LPCSTR m_pszLocation;
+        LPCWSTR m_pwzLocation;
     };
     
     /**

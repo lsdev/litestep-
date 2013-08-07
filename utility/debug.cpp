@@ -2,7 +2,7 @@
 //
 // This is a part of the Litestep Shell source code.
 //
-// Copyright (C) 1997-2011  LiteStep Development Team
+// Copyright (C) 1997-2013  LiteStep Development Team
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -60,17 +60,17 @@ void DbgTraceWindowMessage(const char* pszPrefix, unsigned int uMsg,
 {
     if (uMsg < WM_USER)
     {
-        TRACE("[%s] WM_%.4X(%.8X, %.8X)",
+        TRACE("[%ls] WM_%.4X(%p, %p)",
             pszPrefix, uMsg, wParam, lParam);
     }
     else if (uMsg >= WM_USER && uMsg <= (WM_APP-1))
     {
-        TRACE("[%s] WM_USER+%u(%.8X, %.8X)",
+        TRACE("[%ls] WM_USER+%u(%p, %p)",
             pszPrefix, uMsg-WM_USER, wParam, lParam);
     }
     else if (uMsg >= WM_APP && uMsg <= (MAXINTATOM-1))
     {
-        TRACE("[%s] WM_APP+%u(%.8X, %.8X)",
+        TRACE("[%ls] WM_APP+%u(%p, %p)",
             pszPrefix, uMsg-WM_APP, wParam, lParam);
     }
     else if (uMsg >= MAXINTATOM)
@@ -82,12 +82,12 @@ void DbgTraceWindowMessage(const char* pszPrefix, unsigned int uMsg,
         if (GetClipboardFormatName(
             uMsg, szMsgName, COUNTOF(szMsgName)) > 0)
         {
-            TRACE("[%s] WM_'%s'(%.8X, %.8X)",
+            TRACE("[%ls] WM_'%ls'(%p, %p)",
                 pszPrefix, szMsgName, wParam, lParam);
         }
         else
         {
-            TRACE("[%s] WM_%.8X(%.8X, %.8X)",
+            TRACE("[%ls] WM_%.8X(%p, %p)",
                 pszPrefix, uMsg, wParam, lParam);
         }
     }

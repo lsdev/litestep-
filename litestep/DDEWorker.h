@@ -3,7 +3,7 @@
 // This is a part of the Litestep Shell source code.
 //
 // Copyright (C) 1998 (e)
-// Copyright (C) 1997-2011  LiteStep Development Team
+// Copyright (C) 1997-2013  LiteStep Development Team
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -43,11 +43,11 @@ public:
     DDEWorker();
     ~DDEWorker();
     
-    BOOL ParseRequest(LPCSTR pszRequest);
+    BOOL ParseRequest(LPCTSTR pszRequest);
     BOOL ListGroups(LPVOID& pGroupList, UINT& ulSize);
     
 private:
-    BOOL _FindFiles(LPSTR pszPath, BOOL bFindFolder);
+    BOOL _FindFiles(LPTSTR pszPath, BOOL bFindFolder);
     BOOL _ShowGroup(LPCTSTR strGroupName, int nShow, BOOL bCommon);
     BOOL _CreateGroup(LPCTSTR strGroupName, BOOL bCommon);
     BOOL _DeleteGroup(LPCTSTR strGroupName, BOOL bCommon);
@@ -56,10 +56,10 @@ private:
       LPCTSTR strCmdLine, LPCTSTR pszDescription, LPCTSTR pszIconPath,
       int nIconIndex, LPCTSTR pszDefDir, WORD dwHotKey, BOOL bMinimize);
     BOOL _ListGroupsHelper(
-      HANDLE hHeap, char* szPath, LPVOID& pGroupList, UINT& ulSize);
-    DWORD _MatchRequest(LPCSTR pszCommand);
+      HANDLE hHeap, wchar_t* szPath, LPVOID& pGroupList, UINT& ulSize);
+    DWORD _MatchRequest(LPCTSTR pszCommand);
     
-    char m_szCurrentGroup[MAX_PATH];
+    TCHAR m_szCurrentGroup[MAX_PATH];
     BOOL m_bIsUserAnAdmin;
 };
 

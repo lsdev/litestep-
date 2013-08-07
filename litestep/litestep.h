@@ -2,7 +2,7 @@
 //
 // This is a part of the Litestep Shell source code.
 //
-// Copyright (C) 1997-2011  LiteStep Development Team
+// Copyright (C) 1997-2013  LiteStep Development Team
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -31,6 +31,7 @@
 // forward declarations
 class IService;
 class TrayService;
+class FullscreenMonitor;
 class DataStore;
 class MessageManager;
 class ModuleManager;
@@ -42,11 +43,9 @@ class ModuleManager;
 #define RSH_PROGMAN     2
 #define RSH_TASKMAN     3
 
-#define LT_RUDEAPP 0xBEAF
-
 // Program Options
-const char szMainWindowClass[] = "TApplication";
-const char szMainWindowTitle[] = "LiteStep";
+const TCHAR szMainWindowClass[] = _T("TApplication");
+const TCHAR szMainWindowTitle[] = _T("LiteStep");
 
 #define GWL_CLASSPOINTER 0
 
@@ -81,7 +80,7 @@ public:
 private:
     void MessageHandler(MSG &message);
     
-    HRESULT CreateMainWindow(bool bSetAsShell);
+    HRESULT CreateMainWindow();
     HRESULT DestroyMainWindow();
     
     void _RegisterShellNotifications(HWND hWnd);
@@ -91,7 +90,8 @@ private:
     LRESULT _HandleSessionChange(DWORD dwCode, DWORD dwSession);
     
     void _Recycle();
-    HRESULT _EnumRevIDs(LSENUMREVIDSPROC pfnCallback, LPARAM lParam) const;
+    HRESULT _EnumRevIDs(LSENUMREVIDSPROCW pfnCallback, LPARAM lParam) const;
+    static BOOL _SetShellWindow(HWND hWnd);
     
     // Application instance
     HINSTANCE m_hInstance;
@@ -99,15 +99,6 @@ private:
     // Recovery Menu
     // This is a special service that is not kept in the services array
     IService* m_pRecoveryMenu;
-    
-    // LSAutoHideModules helpers
-    bool m_bAutoHideModules;
-    HMONITOR m_hFullScreenMonitor; // = NULL;
-    static HMONITOR _FullScreenGetMonitorHelper(HWND hWnd);
-    static BOOL CALLBACK _EnumThreadFSWnd(HWND hWnd, LPARAM lParam);
-    HMONITOR _FullScreenGetMonitor(HWND hWnd) const;
-    void _FullScreenHandler(HMONITOR hMonFullScreen);
-    void _HandleShellHooks(UINT uMsg, WPARAM wParam, LPARAM lParam);
     
     // Windows
     HWND m_hMainWindow; // = NULL;
@@ -141,9 +132,10 @@ private:
     // Service Related
     //
     TrayService* m_pTrayService; // = NULL;
+    FullscreenMonitor* m_pFullscreenMonitor; // = nullptr;
     std::vector<IService*> m_Services;
     
-    HRESULT _InitServices();
+    HRESULT _InitServices(bool bSetAsShell);
     HRESULT _StartServices();
     HRESULT _StopServices();
     void _CleanupServices();

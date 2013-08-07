@@ -29,6 +29,11 @@
 #define IDS_MATHEXCEPTION                   25
 #define IDS_LSAPI_INIT_ERROR                26
 #define IDS_LITESTEP_INIT_ERROR             27
+#define IDS_MODULEWRONGARCH32_ERROR         28
+#define IDS_MODULEWRONGARCH64_ERROR         29
+#define IDS_LITESTEP_ABOUTLS                30
+#define IDS_LITESTEP_EXPLORER               31
+#define IDS_RECURSIVEINCLUDE                32
 #define IDI_LS                              101
 #define IDB_LS                              102
 #define IDD_ABOUTBOX                        103
@@ -40,7 +45,6 @@
 #define IDC_LISTVIEW                        1006
 #define IDC_THEME_INFO                      1007
 #define IDC_EDIT                            1008
-#define IDC_STATIC							-1
 
 // Next default values for new objects
 // 

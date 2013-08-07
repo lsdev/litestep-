@@ -2,7 +2,7 @@
 //
 // This is a part of the Litestep Shell source code.
 //
-// Copyright (C) 1997-2011  LiteStep Development Team
+// Copyright (C) 1997-2013  LiteStep Development Team
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -51,12 +51,16 @@
 // Adds support for IncludeFolder Directive (all .rc files in specified folder
 // will be included - order not guaranteed).  This was added by the LDE(X) team.
 // Thanks Phil!
-// 0.25.0 default: DISABLED
-//#define LS_CUSTOM_INCLUDEFOLDER
+// 0.25.0 default: ENABLED
+#define LS_CUSTOM_INCLUDEFOLDER
 
 // Makes lsapi use picoPNG instead of zlib+libpng
 // 0.25.0 default: ENABLED
 #define LS_USE_PICOPNG
+
+// Makes LiteStep run Explorer's window procedure when set as shell. 
+// 0.25.0 default: ENABLED
+//#define LS_USE_EXPLORER_SERVICE
 
 // Makes LCReadNextConfig conform to pre 0.24.7 API
 // 0.25.0 default: DISABLED

@@ -2,7 +2,7 @@
 //
 // This is a part of the Litestep Shell source code.
 //
-// Copyright (C) 1997-2011  LiteStep Development Team
+// Copyright (C) 1997-2013  LiteStep Development Team
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -57,9 +57,9 @@ private:
 class LSAPIInit
 {
 private:
-    bool setShellFolderVariable(LPCSTR pszVariable, int nFolder);
+    bool setShellFolderVariable(LPCWSTR pwzVariable, int nFolder);
     void setLitestepVars();
-    void getCompileTime(LPSTR pszValue, size_t cchValue);
+    void getCompileTime(LPWSTR pwzValue, size_t cchValue);
     
 public:
     LSAPIInit();
@@ -95,7 +95,7 @@ public:
         return m_dwMainThreadID;
     }
     
-    void Initialize(LPCSTR pszLitestepPath, LPCSTR pszRcPath);
+    void Initialize(LPCWSTR pszLitestepPath, LPCWSTR pszRcPath);
     
     bool IsInitialized() const
     {
@@ -117,8 +117,8 @@ private:
     SettingsManager* m_smSettingsManager;
     
     HWND m_hLitestepWnd;
-    char m_szLitestepPath[MAX_PATH];
-    char m_szRcPath[MAX_PATH];
+    wchar_t m_wzLitestepPath[MAX_PATH];
+    wchar_t m_wzRcPath[MAX_PATH];
     
     bool m_bIsInitialized;
 };
