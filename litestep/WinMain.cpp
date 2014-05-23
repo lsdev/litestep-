@@ -277,59 +277,76 @@ int WINAPI _tWinMain(HINSTANCE hInst, HINSTANCE, LPTSTR lpCmdLine, int)
             wStartFlags &= ~LSF_RUN_STARTUPAPPS;
         }
         
-        if (wStartFlags & LSF_RUN_EXPLORER)
+        bool bLoop;
+        do
         {
-            //
-            // Mode 2: (Try to) start Explorer
-            //
-            if (StartExplorerShell(EXPLORER_WAIT_TIMEOUT))
-            {
-                // Explorer started as shell, no need try LiteStep as well
-                wStartFlags &= ~LSF_RUN_LITESTEP;
-            }
-            else
-            {
-                wStartFlags &= ~LSF_RUN_EXPLORER;
-            }
-        }
-        
-        if (wStartFlags & LSF_RUN_LITESTEP)
-        {
-            HANDLE hMutex = NULL;
+            // Loop back here if explorer is requested as the shell 
+            // while LiteStep is already running
             
-            if (IsOtherInstanceRunning(&hMutex))
+            if (wStartFlags & LSF_RUN_EXPLORER)
             {
                 //
-                // Mode 3a: Other LiteStep instance already running
+                // Mode 2: (Try to) start Explorer
                 //
-                RESOURCE_STR(hInst, IDS_LITESTEP_ERROR1,
-                    "A previous instance of LiteStep was detected.\n"
-                    "Are you sure you want to continue?");
-                
-                // Can show a MessageBox here since the other instance
-                // should have closed the welcome screen already
-                INT idConfirm =  RESOURCE_MSGBOX_F(
-                    "LiteStep", MB_ICONINFORMATION | MB_YESNO | MB_DEFBUTTON2);
-                
-                if (idConfirm == IDNO)
+                if (StartExplorerShell(EXPLORER_WAIT_TIMEOUT))
                 {
+                    // Explorer started as shell, no need try LiteStep as well
                     wStartFlags &= ~LSF_RUN_LITESTEP;
+                }
+                else
+                {
+                    wStartFlags &= ~LSF_RUN_EXPLORER;
                 }
             }
             
             if (wStartFlags & LSF_RUN_LITESTEP)
             {
-                //
-                // Mode 3b: Start the shell!
-                //
-                nReturn = StartLitestep(hInst, wStartFlags, szAltConfigFile);
+                HANDLE hMutex = NULL;
+                
+                if (IsOtherInstanceRunning(&hMutex))
+                {
+                    //
+                    // Mode 3a: Other LiteStep instance already running
+                    //
+                    RESOURCE_STR(hInst, IDS_LITESTEP_ERROR1,
+                        "A previous instance of LiteStep was detected.\n"
+                        "Are you sure you want to continue?");
+                    
+                    // Can show a MessageBox here since the other instance
+                    // should have closed the welcome screen already
+                    INT idConfirm =  RESOURCE_MSGBOX_F(
+                        "LiteStep", MB_ICONINFORMATION | MB_YESNO | MB_DEFBUTTON2);
+                    
+                    if (idConfirm == IDNO)
+                    {
+                        wStartFlags &= ~LSF_RUN_LITESTEP;
+                    }
+                }
+                
+                if (wStartFlags & LSF_RUN_LITESTEP)
+                {
+                    //
+                    // Mode 3b: Start the shell!
+                    //
+                    nReturn = StartLitestep(hInst, wStartFlags, szAltConfigFile);
+                }
+                
+                if (hMutex)
+                {
+                    CloseHandle(hMutex);
+                }
             }
             
-            if (hMutex)
+            bLoop = false;
+
+            if ((nReturn == LRV_EXPLORER_START) && (wStartFlags & LSF_RUN_LITESTEP))
             {
-                CloseHandle(hMutex);
+                // User wants Explorer as the shell anyway
+                wStartFlags |= LSF_RUN_EXPLORER;
+                bLoop = true;
             }
         }
+        while (bLoop);
     }
     
     return nReturn;
